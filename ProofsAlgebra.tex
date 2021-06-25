@@ -1,0 +1,1128 @@
+\documentclass[11pt,a4paper]{article}
+\author{Дедов Иван}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage[OT1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{xcolor}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+
+\renewcommand{\a}{\mathbf{a}}
+\renewcommand{\b}{\mathbf{b}}
+\newcommand{\e}{\mathbf{e}}
+\newcommand{\eprime}{\mathbf{e'}}
+\renewcommand{\f}{\mathbf{f}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\E}{\mathcal{E}}
+
+\newcommand{\I}{\imath}
+\newcommand{\J}{\jmath}
+
+\newcommand{\Rg}[1]{\mathrm{Rg}\hspace{0.5mm}#1}
+\newcommand{\Ker}[1]{\mathrm{Ker}\hspace{0.5mm}#1}
+\renewcommand{\Im}[1]{\mathrm{Im}\hspace{0.5mm}#1}
+\newcommand{\Dim}[1]{\mathrm{dim}\hspace{0.5mm}#1}
+\newcommand{\Char}[1]{\mathrm{char}\hspace{0.5mm}#1}
+\newcommand{\Sgn}[1]{\mathrm{sgn}\hspace{0.5mm}#1}
+\newcommand{\Ord}[1]{\mathrm{ord}\hspace{0.5mm}#1}
+\newcommand{\Inn}[1]{\mathrm{Inn}\hspace{0.5mm}#1}
+\newcommand{\Aut}[1]{\mathrm{Aut}\hspace{0.5mm}#1}
+\newcommand{\Gr}[1]{\mathrm{Gr}\left(#1\right)}
+
+\newcommand{\vect}[1]{\overrightarrow{#1}}
+\renewcommand{\mid}{\hspace{2mm}\middle|\hspace{2mm}}
+
+\newcommand{\proof}{$\square$ }
+\newcommand{\qed}{\hfill$\blacksquare$}
+
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textsf{\textbf{Коллоквиум.} Доказательства}}
+\fancyhead[R]{\textsf{\href{https://t.me/dedov_ivan}{Дедов Иван}, БПИ-206}}
+\fancyfoot[C]{\textsf{Высшая школа экономики, ОП <<Программная инженерия>>}}
+
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\begin{document}
+
+\begin{center}
+
+\begin{huge}
+\textsf{Линейная алгебра\\1 курс}
+\end{huge}
+
+\vspace{5mm}
+
+\begin{LARGE}
+\textsf{\textbf{Материалы для подготовки к коллоквиуму\vspace{3mm}\\
+Доказательства}}
+\end{LARGE}
+
+\end{center}
+
+\rule{\linewidth}{0.3mm}
+
+\vspace{1mm}
+\begin{center}
+\begin{LARGE}
+\textsf{1 модуль}
+\end{LARGE}
+\end{center}
+\vspace{1mm}
+
+\textbf{1. Что происходит с произведением матриц при транспонировании? Ответ обосновать.\\}
+$(A \cdot B)^T = B^T \cdot A^T$\\
+\proof Пусть матрица $A$ имеет размер $m \times n$, а матрица $B$ -- размер $n \times k$. $\forall i = \overline{1, m}, \forall j = \overline{1, k}$:
+\begin{flalign*}
+\left[ (A \cdot B)^T \right]_{ij} & = \left[ A \cdot B \right]_{ji} &&\\
+& = \sum_{r = 1}^n [A]_{jr} \cdot [B]_{ri} &&\\
+& = \sum_{r = 1}^n [A^T]_{rj} \cdot [B^T]_{ir} &&\\
+& = \sum_{r = 1}^n [B^T]_{ir} \cdot [A^T]_{rj} &&\\
+& = \left[ B^T \cdot A^T \right]_{ij} &&\hfill\blacksquare
+\end{flalign*}
+
+\textbf{2. Сформулировать и доказать критерий существования обратной матрицы. Свойства определителя предполагаются известными.\\}
+Для матрицы $A$ существует обратная матрица $A^{-1}$ $\Leftrightarrow$ $\det A \neq 0$.\\
+\proof ($\Rightarrow$) По определению: $AA^{-1} = E \Rightarrow \det (AA^{-1}) = \det E = 1$.\\
+$\det (AA^{-1}) = \det A \cdot \det A^{-1} = 1 \Rightarrow \det A \neq 0.$\\ 
+($\Leftarrow$) Предъявим матрицу $B = \frac{1}{\det A} \cdot \tilde{A}$
+$$\tilde{A} =
+\left(\begin{matrix}
+A_{11} & \hdots & A_{1n} \\
+\vdots & \ddots & \vdots \\
+A_{n1} & \hdots & A_{nn}
+\end{matrix} \right)^T,$$
+где $A_{ij}$ -- алгебраическое дополнение элемента $a_{ij}$. Докажем, что $B = A^{-1}$.\\
+$A \cdot B \stackrel{?}{=} E$:
+\begin{flalign*}
+\left[ A \cdot B \right]_{ij} & \stackrel{\mathrm{def}}{=} \sum_{r = 1}^n [A]_{ir} \cdot [B]_{rj} &&\\
+& = \frac{1}{\det A} \cdot \sum_{r = 1}^n a_{ir} [\tilde{A}]_{rj} &&\\
+& = \frac{1}{\det A} \cdot \sum_{r = 1}^n a_{ir} [A]_{jr} &&\\
+& \stackrel{(8), (9)}{=}
+\begin{cases}
+\frac{1}{\det A} \cdot \det A = 1, i = j \\
+0, i \neq j
+\end{cases} \text{(разложение и фальшивое разложение)} &&\\
+& = [E]_{ij} &&
+\end{flalign*}
+Аналогично проверяется, что $B \cdot A = E$ $\Rightarrow$ по определению $B$ -- это обратная матрица.\qed
+
+\textbf{3. Какие три условия достаточно наложить на функцию от столбцов матрицы, чтобы она обязательно была детерминантом? Ответ обоснуйте для матриц второго порядка.\\}
+Любая полилинейная, кососимметрическая функция, равная 1 на единичной матрице $E$, является определителем.\\
+\proof Докажем утверждение для $n = 2$.
+\begin{flalign*}
+f \left( \left( \begin{matrix}
+a_{11} & a_{12} \\
+a_{21} & a_{22}
+\end{matrix} \right) \right) &\stackrel{(2)}{=}
+a_{11} f \left( \begin{matrix}
+1 & a_{12} \\
+0 & a_{22}
+\end{matrix} \right) +
+a_{21} f \left( \begin{matrix}
+0 & a_{12} \\
+1 & a_{22}
+\end{matrix} \right) \text{(полилинейность)} &&\\
+& \stackrel{(2)}{=}
+a_{11} a_{22} f \left( \begin{matrix}
+1 & 0 \\
+0 & 1
+\end{matrix} \right) +
+a_{11} a_{12} f \left( \begin{matrix}
+1 & 1 \\
+0 & 0
+\end{matrix} \right) +
+a_{21} a_{12} f \left( \begin{matrix}
+0 & 1 \\
+1 & 0
+\end{matrix} \right) +
+a_{21} a_{22} f \left( \begin{matrix}
+0 & 0 \\
+1 & 1
+\end{matrix} \right) &&\\
+& \stackrel{\text{(4б)}}{=}
+a_{11} a_{22} f \left( \begin{matrix}
+1 & 0 \\
+0 & 1
+\end{matrix} \right) +
+a_{21} a_{12} f \left( \begin{matrix}
+0 & 1 \\
+1 & 0
+\end{matrix} \right) \text{(обнуление на одинаковых элементах)} &&\\
+& \stackrel{\text{(4б)}}{=}
+\left( a_{11} a_{22} - a_{12} a_{21} \right) f \left( \begin{matrix}
+1 & 0 \\
+0 & 1
+\end{matrix} \right) \text{(кососимметричность)} &&\\
+& \stackrel{(7)}{=}
+a_{11} a_{22} - a_{12} a_{21} \text{(равенство 1 на единичной матрице)} &&\\
+& \equiv \det A &&\hfill\blacksquare
+\end{flalign*}
+
+\textbf{4. Сформулировать и доказать утверждение о том, что кососимметричность для линейной функции эквивалентна обнулению на паре совпадающих элементов.\\}
+Если $f$ -- линейная функция, то: $f(x, y) = -f(y, x)$ $\Leftrightarrow$ $f(x, x) = 0$.\\
+\proof ($\Rightarrow$) $f(x, x) = -f(x, x) \Rightarrow 2 f(x, x) = 0 \Rightarrow f(x, x) = 0$\\
+($\Leftarrow$) $f(u+v, u+v) = f(u, u) + f(u, v) + f(v, u) + f(v, v) \stackrel{f(x, x) = 0}{=} f(u, v) + f(v, u) = 0 \Rightarrow f(u, v) = -f(v, u)$\qed
+
+\textbf{5. Чему равен определитель произведения двух квадратных матриц? Ответ обосновать.\\}
+$\det (A \cdot B) = \det A \cdot \det B$\\
+\proof Рассмотрим $f(B) = \det (A \cdot B)$. Докажем, что $f$ линейна и кососимметрична. Тогда $f(B) = \det B \cdot f(E)$.\\
+1) Она кососимметрична, так как при совпадении двух столбцов матрицы $B$ столбцы матрицы $A \cdot B$ также будут совпадать. Свойство выполнено за счёт свойств определителя.\\
+2) Если столбец матрицы $B$ имеет вид $\lambda a + \mu b$, то в матрице $A \cdot B$ он будет иметь вид $\lambda Aa + \mu Ab$ и определитель линеен $\Rightarrow$ $f(B)$ линейна $\Rightarrow$ выполнены свойства (2) -- полилинейность и (4б) -- обнуление на двух одинаковых строках $\Rightarrow$ $f(B) = \det B \cdot f(E)$, но $f(E) = \det (A \cdot E) = \det A$ $\Rightarrow$ $f(B) = \det (A \cdot B ) = \det B \cdot \det A$.\qed
+
+\textbf{6. Выписать формулы Крамера для квадратной матрицы произвольного порядка и доказать их.\\}
+$\forall i = \overline{1, n}: x_i \cdot \det A = \Delta_i$, где $\Delta_i$ -- определитель матрицы, в которой на $i$-м месте стоит столбец $b$ правых частей СЛАУ $Ax = b$.\\
+\proof Пусть $A_i$ -- $i$-й столбец матрицы $A$. Запишем СЛАУ в векторном виде: $x_1 A_1 + \hdots + x_n A_n = b$.\\
+$\Delta_i = \det \left(A_1, \hdots, A_{i-1}, \sum_{j = 1}^n x_j A_j, A_{i+1}, \hdots, A_n\right)$.\\
+Определитель линеен: $\Delta_i = \sum_{j = 1}^n x_j \cdot \det \left( A_1, \hdots, A_{i-1}, A_j, A_{i+1}, \hdots, A_n \right)$.\\
+Определитель обнулится, если в матрице найдутся две одинаковые строки, т.е. определитель станет нулём, если $j \neq i$:\\
+$\Delta_i = x_i \cdot \det \left( A_1, \hdots, A_{i-1}, A_i, A_{i+1}, \hdots, A_n \right) = x_i \det A$\qed
+
+\textbf{7. Сформулировать и доказать критерий линейной зависимости.\\}
+$a_1, \hdots, a_s$ линейно зависимы $\Leftrightarrow$ хотя бы один из $a_1, \hdots, a_s$ линейно выражается через остальные.\\
+\proof ($\Rightarrow$) Пусть $a_1, \hdots, a_s$ линейно зависимы. Тогда по определению $\exists \alpha_1, \hdots, \alpha_s : \alpha_1 a_1 + \hdots + \alpha_s a_s = 0$. Предположим, что $\alpha_1 \neq 0$. Тогда $a_1 = -\frac{\alpha_2}{\alpha_1} a_2 - \hdots - \frac{\alpha_s}{\alpha_1} a_s$. Получили выражение для $a_1$ как линейной комбинации остальных $a_i$.\\
+($\Leftarrow$) Пусть $a_1 = \beta_2 a_2 + \hdots + \beta_s a_s$. Тогда $1 \cdot a_1 - \beta_2 a_2 - \hdots - \beta_s a_s = 0$ -- получили нетривиальную ($1 \neq 0$) линейную комбинацию $a_1, \hdots, a_s$, равную нулю $\stackrel{\mathrm{def}}{\Rightarrow}$ $a_1, \hdots, a_s$ линейно зависимы.\qed
+
+\textbf{8. Как связан ранг транспонированной матрицы с рангом исходной матрицы? Ответ обосновать.\\}
+$\Rg{A} = \Rg{A^T}$\\
+\proof Покажем, что $\Rg{A^T} \geq \Rg{A}$.\\
+Пусть $\Rg{A} = r$. Тогда по определению $\exists M_{i_1 i_2 \hdots i_r}^{j_1 j_2 \hdots j_r} \neq 0$. В матрице $A^T$ есть минор $N_{j_1 j_2 \hdots j_r}^{i_1 i_2 \hdots i_r}$, получающийся из $M$ операцией транспонирования. $N \neq 0$ по свойству (1) определителя (о том, что $\det A = \det A^T$) $\Rightarrow$ по определению ранга $\Rg{A^T} \geq r = \Rg{A}$.\\
+$\Rg{A} \leq \Rg{A^T} \leq \Rg{\left( A^T \right)^T} = \Rg{A}$ $\Rightarrow$ $\Rg{A} = \Rg{A^T}$.\qed
+
+\textbf{9. Сформулировать и доказать следствие теоремы о базисном миноре для квадратных матриц (критерий невырожденности).\\}
+Рассмотрим квадратную матрицу $A \in \mathbf{M}_n( \R )$. Следующие условия эквивалентны:\\
+1) $\det A \neq 0$;\\
+2) $\Rg{A} = n$;\\
+3) все строки $A$ линейно независимы.\\
+\proof ($1 \Rightarrow 2$) Пусть $\det A \neq 0$ $\Rightarrow$ в матрице $A$ есть минор порядка $n$, он не равен нулю $\stackrel{\mathrm{def}}{\Rightarrow}$ $\Rg{A} = n$.\\
+($2 \Rightarrow 3$) Пусть $\Rg{A} = n$ $\Rightarrow$ все строки базисные $\Rightarrow$ по пункту 1 теоремы о базисном миноре они все линейно независимы.\\
+($3 \Rightarrow 1$) Пусть строки $A$ линейно независимы. Предположим, что $\det A = 0$. Тогда $\Rg{A} < n$ по определению ранга, а значит (по пункту 2 теоремы о базисном миноре) хотя бы одна из строк является линейной комбинацией остальных. Следовательно, по критерию линейной зависимости все строки линейно зависимы. Противоречие $\Rightarrow$ $\det A \neq 0$.\qed
+
+\textbf{10. Сформулируйте и докажите теорему о базисном миноре.\\}
+1) Базисные строки (столбцы), соответствующие любому базисному минору $M$ матрицы $A$, линейно независимы.\\
+2) Строки (столбцы), не вошедшие в $M$, являются линейной комбинацией базисных.\\
+\proof 1) Предположим противное: пусть базисные строки линейно зависимы. Тогда по критерию линейной зависимости одна из них является линейной комбинацией остальных. Следовательно, $M = 0$ по свойству определителя. Получили противоречие с определением базисного минора $\Rightarrow$ все базисные строки линейно независимы.\\
+2) Без ограничения общности, будем считать, что базисный минор $M$ матрицы $A$ расположен в левом верхнем углу матрицы. Пусть $\Rg{A} = r$.
+$$\left( \begin{matrix}
+\boldsymbol{a_{11}} & \hdots & \boldsymbol{a_{1r}} & a_{1, r+1} & \hdots & a_{1n} \\  
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+\boldsymbol{a_{r1}} & \hdots & \boldsymbol{a_{rr}} & a_{r, r+1} & \hdots & a_{rn} \\
+a_{r+1, 1} & \hdots & a_{r+1, r} & a_{r+1, r+1} & \hdots & a_{r+1, n} \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+a_{m1} & \hdots & a_{mr} & a_{m, r+1} & \hdots & a_{mn}
+\end{matrix} \right)$$
+Возьмём строку $a_k$, где $k > r$ и покажем, что $\exists \lambda_1, \hdots, \lambda_r : a_k = \lambda_1 a_1 + \hdots + \lambda_r a_r$. Составим определитель $\Delta$:
+$$\Delta =
+\begin{vmatrix}
+\boldsymbol{a_{11}} & \hdots & \boldsymbol{a_{1r}} & a_{1j} \\
+\vdots & \ddots & \vdots & \vdots \\
+\boldsymbol{a_{r1}} & \hdots & \boldsymbol{a_{rr}} & a_{rj} \\
+a_{k1} & \hdots & a_{kr} & a_{kj}
+\end{vmatrix}_{(r+1) \times (r+1)}$$
+Покажем, что $\Delta = 0$ $(j = \overline{1, n})$.\\
+$\bullet$ Если $j \leq r$, то в $\Delta$ есть два одинаковых столбца, и по свойству (4б) определителя, он обнулится: $\Delta = 0$.\\
+$\bullet$ Если $j > r$, то $\Delta$ является минором исходной матрицы $A$. Тогда $\Delta = 0$, так как является минором порядка $r+1$ в матрице ранга $r$.\\
+Разложим $\Delta$ по последнему столбцу:
+$$a_{1j} A_1 + a_{2j} A_2 + \hdots + a_{rj} A_r + a_{kj} A_k = 0 \quad (\text{т.к. } \Delta = 0).$$
+Здесь $A_i$ -- алгебраическое дополнение в $\Delta$, причём $A_k \neq 0$, так как это базисный минор. Имеем $a_{kj} = -\frac{A_1}{A_k} a_{1j} - \hdots - \frac{A_r}{A_k} a_{rj}$ $(j = \overline{1, n}, k > r)$. Отсюда следует, что справедлива формула для строк: $$a_{k1}, \hdots, a_{kn} = \lambda_1 (a_{11}, \hdots, a_{1n}) + \hdots + \lambda_r (a_{r1}, \hdots, a_{rn})$$
+Значит, $a_k = \lambda_1 a_1 + \hdots + \lambda_r a_r$, где $a_j$ -- это $j$-я строка.\qed
+
+\textbf{11. Сформулируйте теорему Кронекера--Капелли и докажите её.\\}
+СЛАУ $Ax = b$ совместна $\Leftrightarrow$ $\Rg{A} = \Rg{(A \vert b)}$.\\
+\proof ($\Rightarrow$) По определению СЛАУ совместна $\Leftrightarrow$ существует столбец $x^0 =
+\left( \begin{matrix}
+x_1^0 \\
+\vdots \\
+x_n^0
+\end{matrix} \right)$, такой что $Ax^0 = b$, что в векторной форме можно записать как $x_1^0 a_1 + \hdots + x_n^0 a_n = b$, где $a_j$ -- $j$-й столбец матрицы $A$. Преположим, что базисный минор $M$ матрицы $A$ расположен в её левом верхнем углу $\Rightarrow$ столбцы $a_1, \hdots, a_r$ являются базисными, а $a_{r+1}, \hdots, a_n$ являются их линейной комбинацией (по пункту 2 теоремы о базисном миноре):
+\begin{flalign*}
+a_{r+1} & = \lambda_{1, r+1} a_1 + \hdots + \lambda_{r, r+1} a_r &&\\
+\vdots &&\\
+a_{n} & = \lambda_{1n} a_1 + \hdots + \lambda_{rn} a_r &&
+\end{flalign*}
+Отсюда следует, что
+\begin{flalign*}
+b & = x_1^0 a_1 + \hdots + x_r^0 a_r + x_{r+1}^0 \left( \lambda_{1, r+1} a_1 + \hdots + \lambda_{r, r+1} a_r \right) + \hdots + x_n^0 \left( \lambda_{1n} a_1 + \hdots + \lambda_{rn} a_r \right) &&\\
+& = (x_1^0 + x_{r+1}^0 \lambda_{1, r+1} + \hdots + \lambda_{1n} x_n^0) a_1 + \hdots + (x_r^0 + x_{r+1}^0 \lambda_{r, r+1} + \hdots + \lambda_{rn} x_n^0) a_r &&
+\end{flalign*}
+Т.е. столбец $b$ правых частей является линейной комбинацией базисных столбцов матрицы $A$. Из этого следует, что $M$ -- базисный минор и для матрицы $(A \vert b)$, так как:\\
+1) $M \neq 0$;\\
+2) все окаймляющие его миноры равны нулю, так как у них один из столбцов -- линейная комбинация столбцов $a_1, \hdots, a_r$.\\
+$(\underbrace{a_{r+1}, \hdots, a_r}_{\text{по опр. баз. минора в } A}, \underbrace{b}_{\text{показали}}) \Rightarrow \Rg{(A \vert b)} = r$.\\
+($\Leftarrow$) Пусть $\Rg{A} = r$, $M$ -- базисный минор $A$. Преположим, что он расположен в левом верхнем углу матрицы. Очевидно, что $M$ является базисным минором и для матрицы $(A|b)$ (иначе, добавление $b$ меняло бы ранг). Следовательно, по пункту 2 теоремы о базисном миноре, столбец $b$ является линейной комбинацией остальных столбцов, т.е. $a_1, \hdots, a_r$, входящих в $M$:
+$$b = \lambda_1 a_1 + \hdots + \lambda_r a_r$$
+Следовательно, $x =
+\left( \begin{matrix}
+\lambda_1 \\
+\vdots \\
+\lambda_r \\
+0 \\
+\vdots \\
+0
+\end{matrix} \right)$ -- решение СЛАУ $Ax = b$.\\
+$\lambda_1 a_1 + \hdots + \lambda_r a_r + 0 \cdot a_{r+1} + \hdots + 0 \cdot a_n = b$\qed
+
+\textbf{12. Сформулируйте и докажите теорему о ранге матрицы (теорема о базисном миноре предполагается известной).\\}
+Ранг матрицы равен максимальному числу её линейно независимых строк (столбцов).\\
+\proof Докажем теорему для строк.\\
+Пусть $\Rg{A} = r$, а максимальное количество линейно независимых строк равно $k$. Покажем, что $k = r$.\\
+1) Так как в $A$ имеется $r$ линейно независимых строк (по пункту 1 теоремы о базисном миноре), то $k \geq r$.\\
+2) Вычеркнем из $A$ все строки, кроме $k$ линейно независимых. Получим матрицу $A_1$, в которой $k$ строк. При этом $\Rg{A_1} = k$ (если бы ранг был меньше $k$, то по пункту 2 теоремы о базисном миноре какая-то строка являлась бы линейной комбинацией остальных. По критерию линейной зависимости, они будут линейно зависимыми. Это противоречие, следовательно, $\Rg{A_1} = k$.)\\
+Базисный минор в $A_1$ имеет порядок $k$ и является ненулевым минором порядка $k$ в исходной матрице, а значит $k \leq r = \Rg{A}$.\\
+3) $k \leq r$, $r \leq k$ $\Rightarrow$ $r = k$.\qed
+
+\rule{\linewidth}{0.3mm}
+
+\vspace{1mm}
+\begin{center}
+\begin{LARGE}
+\textsf{2 модуль}
+\end{LARGE}
+\end{center}
+\vspace{1mm}
+
+\textbf{1. Сформулируйте теорему о структуре общего решения неоднородной системы линейных алгебраических уравнений и докажите её (теорема о структуре общего решения однородной системы линейных алгебраических уравнений предполагается известной).\\}
+Пусть известно частное решение $\tilde{x}$ СЛАУ $Ax = b$. Тогда любое решение этой СЛАУ может быть представлено в виде $x = \tilde{x} + c_1 \Phi_1 + \hdots + c_k \Phi_k$, где $c_1, \hdots, c_k$ -- некоторые постоянные, а $\Phi_1, \hdots, \Phi_k$ -- ФСР соответствующей однородной СЛАУ $Ax = 0$.\\
+\proof Пусть $x^0$ -- произвольное решение СЛАУ $Ax = b$ $\Rightarrow$ по свойствам решений, $x^0 - \tilde{x}$ -- решение СЛАУ $Ax = 0$.\\
+По теореме о структуре общего решения ОСЛАУ (применяя к $x^0 - \tilde{x}$):\\
+$x^0 - \tilde{x} = c_1 \Phi_1 + \hdots + c_k \Phi_k$\\
+$x^0 = \tilde{x} + c_1 \Phi_1 + \hdots + c_k \Phi_k$\qed
+
+\textbf{2. Выпишите формулу для вычисления скалярного произведения векторов, заданных своими координатами в произвольном базисе трёхмерного пространства, и приведите её вывод.\\}
+Пусть $\vect{e_1}, \vect{e_2}, \vect{e_3}$ -- базис в трёхмерном пространстве, $\vect{a} = a_1 \vect{e_1} + a_2 \vect{e_2} + a_3 \vect{e_3}$ и $\vect{b} = b_1 \vect{e_1} + b_2 \vect{e_2} + b_3 \vect{e_3}$ -- разложения векторов $\vect{a}$ и $\vect{b}$ по этому базису. Тогда их скалярное произведение
+$$\left( \vect{a}, \vect{b} \right) =
+\left( \begin{matrix}
+a_1 & a_2 & a_3
+\end{matrix} \right)
+\left( \begin{matrix}
+\left( \vect{e_1}, \vect{e_1} \right) & \left( \vect{e_1}, \vect{e_2} \right) & \left( \vect{e_1}, \vect{e_3} \right)\\
+\left( \vect{e_2}, \vect{e_1} \right) & \left( \vect{e_2}, \vect{e_2} \right) & \left( \vect{e_2}, \vect{e_3} \right) \\
+\left( \vect{e_3}, \vect{e_1} \right) & \left( \vect{e_3}, \vect{e_2} \right) & \left( \vect{e_3}, \vect{e_3} \right)
+\end{matrix} \right)
+\left( \begin{matrix}
+b_1 \\
+b_2 \\
+b_3
+\end{matrix} \right).$$
+\proof Доказательство -- прямая выкладка. Используем линейность скалярного произведения и определение матричного произведения.\qed
+
+\textbf{3. Выпишите формулу для вычисления векторного произведения в правом ортонормированном базисе трёхмерного пространства и приведите её вывод.\\}
+Пусть $\vect{\I}, \vect{\J}, \vect{k}$ -- правый ортонормированный базис, $\vect{a} = a_x \vect{\I} + a_y \vect{\J} + a_z \vect{k}$, $\vect{b} = b_x \vect{\I} + b_y \vect{\J} + b_z \vect{k}$. Тогда
+$$\vect{a} \times \vect{b} =
+\begin{vmatrix}
+\vect{\I} & \vect{\J} & \vect{k} \\
+a_x & a_y & a_z \\
+b_x & b_y & b_z
+\end{vmatrix}
+= \vect{\I} \left( a_y b_z - a_z b_y \right) + \vect{\J} \left( a_z b_x - a_x b_z \right) + \vect{k}\left( a_x b_y - a_y b_x \right).$$
+\proof Так как $\vect{\I}, \vect{\J}, \vect{k}$ -- правый ортонормированный базис, то:\\
+$\vect{\I} \times \vect{\I} = \vect{\J} \times \vect{\J} = \vect{k} \times \vect{k} = 0$;\\
+$\vect{\I} \times \vect{\J} = \vect{k}, \quad \vect{\J} \times \vect{\I} = -\vect{k}$;\\
+$\vect{\I} \times \vect{k} = -\vect{\J}, \quad \vect{k} \times \vect{\I} = \vect{\J}$;\\
+$\vect{\J} \times \vect{k} = \vect{\I}, \quad \vect{k} \times \vect{\J} = -\vect{\I}$.\\
+Поэтому:
+\begin{flalign*}
+\vect{a} \times \vect{b} & = \left( a_x \vect{\I} + a_y \vect{\J} + a_z \vect{k} \right) \times \left( b_x \vect{\I} + b_y \vect{\J} + b_z \vect{k} \right)&&\\
+& = a_x b_y \left( \vect{\I} \times \vect{\J} \right) + a_x b_z \left( \vect{\I} \times \vect{k} \right) + a_y b_x \left( \vect{\J} \times \vect{\I} \right) + a_y b_z \left( \vect{\J} \times \vect{k} \right) + a_z b_x \left( \vect{k} \times \vect{\I} \right) + &&\\
+&\quad + a_z b_y \left( \vect{k} \times \vect{\J} \right) &&\\
+& = \vect{\I} \left( a_y b_z - a_z b_y \right) + \vect{\J} \left( a_z b_x - a_x b_z \right) + \vect{k} \left( a_x b_y - a_y b_x \right) &&\\
+& =
+\begin{vmatrix}
+\vect{\I} & \vect{\J} & \vect{k}\\
+a_x & a_y & a_z \\
+b_x & b_y & b_z
+\end{vmatrix} &&\hfill\blacksquare
+\end{flalign*}
+
+\textbf{4. Докажите теорему о том, что любое линейное уравнение на координаты точки в трёхмерном пространстве задаёт плоскость и что любая плоскость определяется линейным уравнением.\\}
+Любая плоскость в пространстве определяется уравнением $Ax + By + Cz + D = 0$, где $A, B, C, D$ -- некоторые числа, а любое уравнение $Ax + By + Cz + D = 0$, где $A^2 + B^2 + C^2 > 0$, определяет в пространстве плоскость.\\
+\proof 1) Рассмотрим плоскость $\pi$. Пусть точка $M_0(x_0, y_0, z_0)$ ей принадлежит. Рассмотрим вектор $\vect{n} \perp \pi$. Пусть $\vect{n} = (A, B, C)$. $M(x, y, z) \in \pi$ $\Leftrightarrow$ $\left( \vect{n}, \vect{M_0 M} \right) = 0$ $\Leftrightarrow$ $A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$, т.е. $Ax + By + Cz + D = 0$, где $D = -Ax_0 - By_0 - Cz_0$. Таким образом, координаты $M$ удовлетворяют уравнению $Ax + By + Cz + D = 0$.\\
+2) Рассмотрим $Ax + By + Cz + D = 0$, где $A^2 + B^2 + C^2 > 0$. Оно имеет хотя бы одно решение (например, $x_0 = -\frac{D}{A}, y_0 = z_0 = 0$, если $A \neq 0$).\\
+Обозначим за $M_0$ точку $(x_0, y_0, z_0)$. Пусть точка $M(x, y, z)$ удовлетворяет уравнению $Ax + By + Cz + D = 0$. Вычтем из него равенство $Ax_0 + By_0 + Cz_0 + D = 0$:\\
+$A(x - x_0) + B(y - y_0) + C(z - z_0) = 0$ $\Leftrightarrow$ $(\vect{n}, \vect{M_0 M}) = 0$, где $\vect{n} = (A, B, C)$ $\Leftrightarrow$ $\vect{n} \perp \vect{M_0 M}$ $\Leftrightarrow$ точка $M$ лежит в плоскости, проходяшей через $M_0$ и перпендикулярной вектору $\vect{n}$ $\Rightarrow$ уравнение $Ax + By + Cz + D = 0$ определяет плоскость.\qed
+
+\textbf{5. Выпишите формулу для вычисления расстояния от точки до плоскости и приведите её вывод.\\}
+Пусть плоскость $\pi$ задана уравнением $Ax + By + Cz + D = 0$ и точка $M(x_0, y_0, z_0)$. Тогда расстояние от точки $M$ до плоскости $\pi$ рассчитывается как $$\rho (M, \pi) = \frac{|Ax_0 + By_0 + Cz_0 + D|}{\sqrt{A^2 + B^2 + C^2}}$$
+\proof Пусть $M_1$ -- произвольная точка на плоскости. Тогда:
+\begin{flalign*}
+\rho(M, \pi) & = \left\vert \mathrm{pr}_{\vect{n}} \vect{M_1 M} \right\vert &&\\
+& = \frac{\left\vert \left( \vect{M_1 M}, \vect{n} \right) \right\vert}{\left\vert \vect{n} \right\vert } &&\\
+& = \frac{\left\vert A(x_0 - x_1) + B(y_0 - y_1) + C(z_0 - z_1) \right\vert }{\sqrt{A^2 + B^2 + C^2}} &&\\
+& = \frac{\left\vert Ax_0 + By_0 + Cz_0 + D \right\vert }{\sqrt{A^2 + B^2 + C^2}} &&
+\end{flalign*}
+Последний переход верен, так как $M_1 \in \pi \Leftrightarrow A x_1 + B y_1 + C z_1 = -D$.\qed
+
+\textbf{6. Выпишите формулу Муавра и докажите её.\\}
+Пусть $z = r(\cos \varphi + i \sin \varphi )$. Тогда $z^n = r^n\left( \cos ( n \varphi ) + i \sin ( n \varphi ) \right)$\\
+\proof Применим принцип математической индукции.\\
+$\bullet$ База: $n = 2$:
+\begin{flalign*}
+z^2 & = r^2 ( \cos \varphi + i \sin \varphi)( \cos \varphi + i \sin \varphi ) &&\\
+& = r^2 ( ( \cos^2 \varphi - \sin^2 \varphi) + i ( 2 \sin \varphi \cos\varphi)) &&\\
+& = r^2 ( \cos ( 2 \varphi ) + i \sin ( 2 \varphi ) ). &&
+\end{flalign*}
+$\bullet$ Шаг: преположим, что формула верна $\forall n < k$. Докажем, что из этого следует, что она верна и для $n = k + 1$:
+\begin{flalign*}
+z^{k+1} & = z^k \cdot z &&\\
+& = r^k ( \cos ( k \varphi ) + i \sin ( k \varphi ) ) \cdot r ( \cos\varphi + i \sin \varphi ) &&\\
+& = r^{k+1} \left ( \cos ( (k+1) \varphi ) + i \sin ( (k+1) \varphi )\right). &&
+\end{flalign*}
+База верна, шаг обоснован $\Rightarrow$ утверждение верно $\forall n \in \N$.\qed
+
+\textbf{7. Сформулируйте и докажите утверждение об изоморфности циклических групп.\\}
+Все циклические группы одного порядка изоморфны.\\
+\proof Если группа бесконечна, то рассмотрим $f: \left\langle g \right\rangle \rightarrow \left( \Z, + \right)$, такой что
+$g^n \stackrel{f}{\mapsto} n$, т.е. $f(g^n) = n \in \Z$.\\
+Это биекция и гомоморфизм: $f(g^m \cdot g^n) = f(g^{m+n}) = n+m = f(g^n) + f(g^m)$ $\Rightarrow$ это изоморфизм.\\
+Если $G = \left\{ e, g, g^2, \hdots, g^{q-1} \right\}$ и $G' = \left\{ e', g', (g')^2, \hdots, (g')^{q-1} \right\}$, то $f: g^k \mapsto (g')^k, \forall k = \overline{0, q-1}$ -- это биекция и изоморфизм (просто переименовали элементы группы).\qed
+
+\textbf{8. Выпишите формулу для вычисления расстояния между двумя скрещивающимися прямыми и докажите её.\\}
+Пусть прямые $\ell_1$ и $\ell_2$ скрещиваются, и при том заданы направляющими векторами $\vect{s_1}$ и $\vect{s_2}$. Пусть точки $M_1$ и $M_2$ лежат на прямых $\ell_1$ и $\ell_2$ соответственно. Тогда расстояние между $\ell_1$ и $\ell_2$ можно вычислить как $$\rho(\ell_1, \ell_2) = \frac{\left\vert \left\langle \vect{s_1}, \vect{s_2}, \vect{M_1 M_2} \right\rangle \right\vert}{\left\vert \vect{s_1} \times \vect{s_2} \right\vert}$$
+\proof Построим паралеллепипед на векторах $\vect{s_1}$, $\vect{s_2}$ и $\vect{M_1 M_2}$. Тогда расстояние между прямыми, $\rho(\ell_1, \ell_2)$, равно высоте $h$ этого параллелепипеда, т.е.
+\begin{flalign*}
+h & = \frac{V_{\text{параллелепипеда}}}{S_{\text{параллелепипеда}}} &&\\
+& = \frac{\left\vert \left\langle \vect{s_1}, \vect{s_2}, \vect{M_1 M_2} \right\rangle \right\vert}{\left\vert \vect{s_1} \times \vect{s_2} \right\vert} &&\blacksquare
+\end{flalign*}
+
+\textbf{9. Дайте определение фундаментальной системы решений (ФСР) однородной системы линейных уравнений. Докажите теорему о существовании ФСР.\\}
+\textit{Определение:} Любые $n - r$ линейно независимых столбцов, являющихся решениями однородной СЛАУ $Ax = 0$, где $n$ -- число неизвестных/столбцов в матрице $A$, $r$ -- ранг матрицы $A$, называют фундаментальной системой решений.\\
+\textit{Теорема:} Рассмотрим ОСЛАУ $Ax = 0$. У неё существуют $k = n - r$ линейно независимых решений, где $n$ -- число неизвестных, $r$ -- ранг матрицы $A$.\\
+\proof Будем предполагать, что базисный минор расположен в левом верхнем углу матрицы.
+$$\left( \begin{matrix}
+\boldsymbol{a_{11}} & \hdots & \boldsymbol{a_{1r}} & a_{1, r+1} & \hdots & a_{1n} \\  
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+\boldsymbol{a_{r1}} & \hdots & \boldsymbol{a_{rr}} & a_{r, r+1} & \hdots & a_{rn} \\
+a_{r+1, 1} & \hdots & a_{r+1, r} & a_{r+1, r+1} & \hdots & a_{r+1, n} \\
+\vdots & \ddots & \vdots & \vdots & \ddots & \vdots \\
+a_{m1} & \hdots & a_{mr} & a_{m, r+1} & \hdots & a_{mn}
+\end{matrix} \right) $$
+Тогда строки $a_1, \hdots, a_r$ являются базисными, а $a_{r+1}, \hdots, a_m$ -- их линейными комбинациями (по теореме о базисном миноре).
+\begin{flalign*}
+a_{r+1} & = \lambda_1 a_1 + \hdots + \lambda_r a_r &&\\
+\vdots & &&\\
+a_m & = \mu_1 a_1 + \hdots + \mu_r a_r &&
+\end{flalign*}
+Сделаем элементарные преобразования (обнулим эти строки):
+\begin{flalign*}
+a_{r+1} - (\lambda_1 a_1 + \hdots + \lambda_r a_r) \rightarrow a_{r+1} &&\\
+\vdots &&\\
+a_m - (\mu_1 a_1 + \hdots + \mu_r a_r) \rightarrow a_m &&
+\end{flalign*}
+Получим матрицу, у которой последние $n - r$ строк нулевые:
+$$\left( \begin{matrix}
+\boldsymbol{M} & * & \hdots & * \\
+0 & 0 & \hdots & 0
+\end{matrix} \right)$$
+Заметим, что элементарные преобразования не меняют решений СЛАУ (каждому преобразованию соответствуют эквивалентные преобразования исходной СЛАУ $\Rightarrow$ СЛАУ $Ax = 0$ эквивалентна).\\
+Получим систему, в которой слева стоят базисные (главные) переменные, а справа -- свободные:\\
+$\begin{cases}
+a_{11} x_1 + \hdots + a_{1r} x_r = -a_{1, r+1} x_{r+1} - \hdots - a_{1n} x_n \\
+\vdots \\
+a_{r1} x_1 + \hdots + a_{rr} x_r = -a_{r, r+1} x_{r+1} - \hdots - a_{rn} x_n \\
+\end{cases}\hfill(*)$\\
+Придадим свободным переменным следующие наборы значений:
+$\begin{cases}
+x_{r+1} = 1 \\
+x_{r+2} = 0 \\
+\hdots \\
+x_n = 0
+\end{cases}$,
+$\begin{cases}
+x_{r+1} = 0 \\
+x_{r+2} = 1 \\
+\hdots \\
+x_n = 0
+\end{cases}$,
+$\hdots$,
+$\begin{cases}
+x_{r+1} = 0 \\
+x_{r+2} = 0 \\
+\hdots \\
+x_n = 1
+\end{cases}$.\\
+Для каждого набора свободных переменных решим СЛАУ относительно $x_1, \hdots, x_r$. Эта СЛАУ всегда имеет единственное решение, так как её определитель ($r \times r$) -- базисный минор $M$, и он не равен нулю (например, есть решение по формулам Крамера).\\
+Получим следующее решение:\\
+$\bullet$ для первого набора --
+$\left( \begin{matrix}
+x_1 \\
+\vdots \\
+x_r
+\end{matrix} \right) =
+\left( \begin{matrix}
+\varphi_{11} \\
+\vdots \\
+\varphi_{1r}
+\end{matrix} \right)$;\\
+$\bullet$ для второго набора --
+$\left( \begin{matrix}
+x_1 \\
+\vdots \\
+x_r
+\end{matrix} \right) =
+\left( \begin{matrix}
+\varphi_{21} \\
+\vdots \\
+\varphi_{2r}
+\end{matrix} \right)$;\\
+$\hdots$\\
+$\bullet$ для $k$-го набора --
+$\left( \begin{matrix}
+x_1 \\
+\vdots \\
+x_r
+\end{matrix} \right) =
+\left( \begin{matrix}
+\varphi_{k1} \\
+\vdots \\
+\varphi_{kr}
+\end{matrix} \right)$.\\
+Тогда $\Phi_1 =
+\left( \begin{matrix}
+\varphi_{11} \\
+\vdots \\
+\varphi_{1r} \\
+1 \\
+0 \\
+\vdots \\
+0 
+\end{matrix} \right)$,
+$\Phi_2 = \left( \begin{matrix}
+\varphi_{21} \\
+\vdots \\
+\varphi_{2r} \\
+0 \\
+1 \\
+\vdots \\
+0
+\end{matrix} \right)$,
+$\hdots$,
+$\Phi_k = \left( \begin{matrix}
+\varphi_{k1} \\
+\vdots \\
+\varphi_{kr} \\
+0 \\
+0 \\
+\vdots \\
+1
+\end{matrix} \right)$
+являются решениями СЛАУ $(*)$, а следовательно, и решениями исходной СЛАУ.\\
+Покажем, что они линейно независимы. Рассмотрим равенство из определения: $\alpha_1 \Phi_1 + \hdots + \alpha_k \Phi_k = 0$.\\
+$\alpha_1 \left( \begin{matrix}
+\varphi_{11} \\
+\vdots \\
+\varphi_{1r} \\
+1 \\
+0 \\
+\vdots \\
+0
+\end{matrix}\right)
++ \alpha_2 \left( \begin{matrix}
+\varphi_{21} \\
+\vdots \\
+\varphi_{2r} \\
+0 \\
+1 \\
+\vdots \\
+0
+\end{matrix}\right)
++ \hdots + \alpha_k \left( \begin{matrix}
+\varphi_{k1} \\
+\vdots \\
+\varphi_{kr} \\
+0 \\
+0 \\
+\vdots \\
+1
+\end{matrix} \right) =
+\left( \begin{matrix}
+0 \\
+\vdots \\
+0 \\
+0 \\
+0 \\
+\vdots \\
+0
+\end{matrix} \right)$.
+Понимаем, что $\alpha_1 = \alpha_2 = \hdots = \alpha_k = 0$ $\Rightarrow$ по определению линейной независимости $\Phi_1, \Phi_2, \hdots, \Phi_k$ линейно независимы.\\
+Получили, что $\Phi_1, \Phi_2, \hdots, \Phi_k$ линейно независимы, их $n - r$ штук, они являются решениями СЛАУ $Ax = 0$ $\Rightarrow$ по определению -- это ФСР.\qed
+
+\textbf{10. Сформулируйте критерий существования ненулевого решения однородной системы линейных уравнений с квадратной матрицей и докажите его.\\}
+ОСЛАУ $Ax = 0$ с квадратной матрицей $A$ имеет ненулевые решения $\Leftrightarrow$ $\det A = 0$.\\
+\proof ($\Rightarrow$) Предположим, что $\det A \neq 0$. Тогда ОСЛАУ имеет единственное решение (по правилу Крамера), и это решение -- нулевое. Противоречие $\Rightarrow$ $\det A = 0$.\\
+($\Leftarrow$) Знаем, что $\det A = 0$ $\Rightarrow$ $\Rg{A} < n$. Пусть $\Rg{A} = r$. По теореме о существовании ФСР, найдётся $n - r$ линейно независимых (а, значит, не равных нулю) решений ОСЛАУ $Ax = 0$. Они и есть искомые ненулевые решения.\qed
+
+\textbf{11. Докажите теорему о структуре общего решения однородной системы линейных алгебраических уравнений, то есть о том, что произвольное решение однородной СЛАУ может быть представлено в виде линейной комбинации элементов ФСР.\\}
+Пусть $\Phi_1, \hdots, \Phi_k$ -- ФСР ОСЛАУ $Ax = 0$. Тогда любое решение этой СЛАУ можно представить в виде $x = c_1 \Phi_1 + \hdots + c_k \Phi_k$, где $c_1, \hdots, c_k$ -- некоторые числа.\\
+\proof Пусть $x^0 =
+\left( \begin{matrix}
+x_1^0 \\
+\vdots \\
+x_n^0
+\end{matrix} \right)$ -- произвольное решение ОСЛАУ $Ax = 0$. Предположим, что базисный минор матрицы $A$ расположен в левом верхнем углу матрицы.\\
+Повторяя рассуждения из доказательства теоремы о существовании ФСР, выразим главные переменные через свободные:
+$\begin{cases}
+a_{11} x_1 + \hdots + a_{1r} x_r = -a_{1, r+1} x_{r+1} - \hdots - a_{1n} x_n \\
+\vdots \\
+a_{r1} x_1 + \hdots + a_{rr} x_r = -a_{r, r+1} x_{r+1} - \hdots - a_{rn} x_n
+\end{cases}\hfill(1)$\\
+Решим эту СЛАУ относительно неизвестных $x_1, \hdots, x_r$ (например, методом Гаусса или Крамера):
+$\begin{cases}
+x_1 = \alpha_{1, r+1} x_{r+1} + \hdots + \alpha_{1n} x_n \\
+\vdots \\
+x_r = \alpha_{r, r+1} x_{r+1} + \hdots + \alpha_{rn} x_n
+\end{cases}(\alpha_{ij}\text{ -- некоторые числа})\hfill(2)$\\
+Составим новую матрицу $D_{n \times (k+1)}$:
+$$\left( \begin{matrix}
+x_1^0 & \varphi_{11} & \hdots & \varphi_{k1} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_r^0 & \varphi_{1r} & \hdots & \varphi_{kr} \\
+x_{r+1}^0 & \varphi_{1, r+1} & \hdots & \varphi_{k, r+1} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_n^0 & \varphi_{1n} & \hdots & \varphi_{kn}
+\end{matrix} \right)$$
+Здесь $\varphi_{ij}$ -- координаты столбцов, образующих ФСР. Покажем, что $\Rg{D} = k$.\\
+1) $\Rg{D} \geq k$, так как $\Phi_1, \hdots, \Phi_k$ -- линейно независимы (по определению ФСР), а по теореме о ранге матрицы, $\Rg{D}$ есть максимальное число линейно независимых столбцов.\\
+2) $\Rg{D} \leq k$.\\
+Столбцы $x^0, \Phi_1, \hdots, \Phi_k$ -- решения исходной СЛАУ $Ax = 0$. Следовательно, из (2) получим, что:
+\begin{flalign*}
+x_1^0 & = \alpha_{1, r+1} x_{r+1}^0 + \hdots + \alpha_{1n} x_n^0,&&\\
+\varphi_{11} & = \alpha_{1, r+1} \varphi_{1, r+1} + \hdots + \alpha_{1n} \varphi_{1n}, &&\\
+\vdots & &&\\
+\varphi_{k1} & = \alpha_{1, r+1} \varphi_{k, r+1} + \hdots + \alpha_{1n} \varphi_{kn}. &&
+\end{flalign*}
+То есть первая строка $d_1$ матрицы $D$ является линейной комбинацией строк $d_{r+1}, \hdots, d_n$: $d_1 = \alpha_{1, r+1} d_{r+1} + \hdots + \alpha_{1n} d_n$. Аналогично, с остальными строками вплоть до $r$-й: $d_r = \alpha_{r, r+1} d_{r+1} + \hdots + \alpha_{rn} d_n$.\\
+Сделаем элементарные преобразования:
+\begin{flalign*}
+d_1 - \alpha_{1, r+1} d_{r+1} - \hdots - \alpha_{1n} d_n \rightarrow d_1 &&\\
+\vdots & &&\\
+d_r - \alpha_{r, r+1} d_{r+1} - \hdots - \alpha_{rn} d_n \rightarrow d_r &&
+\end{flalign*}
+Получаем матрицу $D_1$, у которой первые $r$ строк нулевые:
+$$D \sim D_1 =
+\left( \begin{matrix}
+0 & 0 & \hdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \hdots & 0 \\
+x_{r+1}^0 & \varphi_{1, r+1} & \hdots & \varphi_{k, r+1} \\
+\vdots & \vdots & \ddots & \vdots \\
+x_n^0 & \varphi_{1n} & \hdots & \varphi_{kn}
+\end{matrix} \right)$$
+$\Rg{D_1} \leq n - r = k$. При элементарных преобразованиях ранг не изменяется $\Rightarrow$ $\Rg{D} \leq k$.\\
+3) Таким образом, $\Rg{D} = k$.\\
+Заметим, что столбцы $\Phi_1, \hdots, \Phi_k$ являются базисными (они линейно независимы и их $k = \Rg{D}$ штук) $\Rightarrow$ по теореме о базисном миноре столбец $x^0$ -- их линейная комбинация, то есть существуют числа $c_1, \hdots, c_k$, такие что $x^0 = c_1 \Phi_1 + \hdots + c_k \Phi_k$.\qed
+
+\rule{\linewidth}{0.3mm}
+
+\vspace{1mm}
+\begin{center}
+\begin{LARGE}
+\textsf{3 модуль}
+\end{LARGE}
+\end{center}
+\vspace{1mm}
+
+\textbf{1. Сформулируйте и докажите утверждение о том, какими могут быть подгруппы группы целых чисел по сложению.\\}
+Любая подгруппа в $\left( \Z, + \right)$ имеет вид $k\Z$ (числа, кратные $k$) для некоторого $k \in \N \cup \left\{ 0 \right\}$.\\
+\proof $k\Z$, очевидно, является подгруппой. Докажем, что других нет.\\
+Если $H$ -- подгруппа и такая, что $H = \left\{ 0 \right\}$, то положим $k := 0$.\\
+Иначе, берём $k := \min\left(H \cap \N \neq \varnothing \right)$.\\
+($\subseteq$) Тогда $k\Z \subseteq H$.\\
+($\supseteq$) Если $a \in H$, то $a = qk + r, 0 \leq r < k \Rightarrow$ $r = a - qk \in H$ (т.к. $a \in H$ и $qk \in H$) $\Rightarrow r = 0$.\\
+$H = k\Z$.\qed
+
+\textbf{2. Сформулируйте и докажите теорему Лагранжа (включая две леммы).\\}
+Пусть $G$ -- конечная группа и $H \subseteq G$ -- её подгруппа. Тогда $\left\vert G \right\vert = \left\vert H \right\vert \cdot \left[ G : H \right]$.\\
+\proof \textit{Лемма 1.} $\forall g_1, g_2 \in G: g_1 H = g_2 H \vee g_1 H \cap g_2 H = \varnothing$.\\
+$\triangleright$ Если $g_1 H \cap g_2 H \neq \varnothing$, то $\exists h_1, h_2 \in H : g_1 h_1 = g_2 h_2 \Rightarrow g_1 = g_2 h_2 h_1^{-1} \stackrel{\cdot H}{\Rightarrow} g_1 H = g_2 h_2 h_1^{-1} H \subseteq g_2 H$ (т.к. $h_2 h_1^{-1} H \in H$). Аналогично, существует и обратное включение $\Rightarrow g_1 H = g_2 H$.\hfill$\blacktriangleleft$ \\
+\textit{Лемма 2.} $\forall g \in G, \forall H \subseteq G: |gH| = |H|$.\\
+$\triangleright$ $gH = \left\{g \cdot h \mid h \in H \right\}$\\
+$\left\vert gH \right\vert \leq \left\vert H \right\vert$ (очевидно). Если $g h_1 = g h_2$, то $g^{-1} g h_1 = g^{-1} g h_2 \Rightarrow h_1 = h_2$, т.е. совпадений нет.\hfill$\blacktriangleleft$ \\
+Любой элемент группы лежит в своём левом смежном классе по $H$. Смежные классы не пересекаются (по лемме 1) и любой из них содержит по $\left\vert H \right\vert$ элементов (по лемме 2).\qed
+
+\textbf{3. Докажите, что гомоморфизм инъективен тогда и только тогда, когда его ядро тривиально.\\}
+Гомоморфизм инъективен $\Leftrightarrow$ ядро этого гомоморфизма тривиально.\\
+\proof ($\Rightarrow$) Пусть гомоморфизм $f : G \rightarrow F$ инъективен, т.е. $f(x) = f(y) \Rightarrow x = y$. Рассмотрим $\Ker{f} = \left\{ g \in G \mid f(g) = e_F \right\}$. Знаем, что $f(e_G) = e_F$ (по свойству гомоморфизма). Пусть $f(x) = e_F$. Имеем, что $f(x) = f(e_G) = e_F \Rightarrow x = e_G$, так как гомоморфизм инъективен. Значит, его ядро состоит только из $\{e_G\}$, т.е. оно тривиально.\\
+($\Leftarrow$) Пусть $\Ker{f} = \{e_G\}$. Пусть гомоморфизм не инъективен, т.е. $\exists x \neq y: f(x) = f(y)$.
+\begin{flalign*}
+e_F & = f(x) \cdot f^{-1}(y) &&\\
+& = f(x) \cdot f(y^{-1}) &&\\
+& = f(x * y^{-1}) &&
+\end{flalign*}
+Отсюда следует, что $x * y^{-1} \in \Ker{f}$, но ядро тривиально $\Rightarrow x * y^{-1} = e_G \Rightarrow x = y$. Получили противоречие $\Rightarrow$ гомоморфизм $f$ инъективен.\qed
+
+\textbf{4. Сформулируйте и докажите критерий нормальности подгруппы, использующий сопряжение.\\}
+Пусть $H \subseteq G$. Тогда следующие условия эквивалентны:\\
+1) $H \triangleleft G$;\\
+2) $\forall g \in G: g H g^{-1} \subseteq H$;\\
+3) $\forall g \in G: g H g^{-1} = H$.\\
+\proof ($1 \Leftrightarrow 3$) Условие нормальности: $\forall g \in G: gH = Hg \stackrel{\cdot g^{-1}}{\Leftrightarrow} gHg^{-1} = Hgg^{-1} = H$.\\
+($1 \Rightarrow 2$) Очевидно: (2) -- более слабое утверждение, чем (3).\\
+($2 \Rightarrow 3$) $\forall h \in H: h = gg^{-1}hgg^{-1} = g(g^{-1}hg)g^-1 \in gHg^{-1}$, так как $g^{-1}hg \in H$ (по условию (2), но взяли $g^{-1}$ вместо $g$) $\Rightarrow H \subseteq gHg^{-1}$.\qed
+
+\textbf{5. Сформулируйте и докажите критерий нормальности подгруппы, использующий понятие ядра гомоморфизма.\\}
+$H \triangleleft G \Leftrightarrow H = \Ker{f}$, где $f$ -- гомоморфизм из $G$ (куда отображает -- неважно).\\
+\proof ($\Leftarrow$) Если $f : G \rightarrow F$ -- гомоморфизм, то $\forall z \in \Ker{f}, \forall g \in G$ покажем, что $g^{-1}zg \in \Ker{f}$.
+\begin{flalign*}
+f(g^{-1}zg) & = f(g^{-1}) f(z) f(g) &&\\
+& = f^{-1}(g) f(z) f(g) &&\\
+& = f^{-1}(g) e_F f(g) &&\\
+& = f^{-1}(g) f(g) = e_F &&
+\end{flalign*}
+По определению ядра $g^{-1}zg \in \Ker{f}$.\\
+$g^{-1} (\Ker{f}) g \subseteq \Ker{f} \Rightarrow \Ker{f}$ -- нормальная подгруппа (из критерия нормальности через сопряжение, взяли $g^{-1}$ вместо $g$).\\
+($\Rightarrow$) Пусть $H$ -- нормальная подгруппа. Необходимо доказать, что существует гомоморфизм $f$, такой что $H = \Ker{f}$.\\
+В роли $f$ может выступать естественный гомоморфизм $\varepsilon : G \rightarrow G / H$, такой что $\varepsilon : a \mapsto aH$ -- элементу $a$ сопоставляется смежный класс, содержащий его. Этот гомоморфизм существует, так как $H$ -- нормальная подгруппа, следовательно $G / H$ корректно определена. $\Ker{\varepsilon}$ -- множество всех элементов, которые перешли в $e \cdot H = H$ -- исходная нормальная подгруппа.\qed
+
+\textbf{6. Сформулируйте и докажите теорему о гомоморфизме групп.\\}
+Пусть отображение $f: G \rightarrow F$ -- гомоморфизм групп. Тогда образ гомоморфизма, $\Im{f} = \left\{ a \in F \mid \exists g \in G: f(g) = a \right\}$, изоморфен (как группа) факторгруппе $G / \Ker{f}$, т.е. $G / \Ker{f} \cong \Im{f}$.\\
+\proof Рассмотрим отображение $\tau : G / \Ker{f} \rightarrow F$, заданное формулой $\tau(g \Ker{f}) := f(g) \in \Im{f} \subseteq F$.\\
+Докажем, что $\tau$ и есть искомый изоморфизм. Проверим корректность: т.е. покажем, что от представителя смежного класса ничего не зависит. $\forall h_1, h_2 \in \Ker{f}$:
+\begin{flalign*}
+f(gh_1) & = f(g) \cdot f(h_1) &&\\
+& = f(g) \cdot e_F &&\\
+& = f(g) \cdot f(h_2) &&\\
+& = f(gh_2) &&
+\end{flalign*}
+Действительно, $\tau$ определён корректно.\\
+Отображение $\tau$ сюръективно ($\tau : G / \Ker{f} \rightarrow \Im{f}$). Покажем, что оно инъективно.\\
+$f(g) = e_F \Leftrightarrow g \in \Ker{f} = H$, т.е. ядро гомоморфизма состоит только из нейтрального элемента в факторгруппе. Воспользуемся критерием инъективности: $\tau$ инъективно $\Leftrightarrow$ $\Ker{\tau}$ тривиально (состоит из $e \cdot \Ker{f}$) $\Rightarrow$ $\tau$ -- биективно.\\
+Остаётся проверить, что $\tau$ -- гомоморфизм:
+\begin{flalign*}
+\tau\left((g_1 \cdot \Ker{f}) \cdot (g_2 \cdot \Ker{f})\right)& = \tau(g_1 g_2 \Ker{f})&&\\
+& = f(g_1 \cdot g_2)&&\\
+& = f(g_1) \cdot f(g_2)&&\\
+& = \tau(g_1 \Ker{f}) \cdot \tau(g_2 \Ker{f}).&&
+\end{flalign*}
+Получили, что $\tau \left( ( g_1 \Ker{f} ) ( g_2 \Ker{f} ) \right) = \tau ( g_1 \Ker{f} ) \cdot \tau ( g_2 \Ker{f} )$.\\
+$\tau$ -- биективный гомоморфизм, т.е. изоморфизм.\qed
+
+\textbf{7. Докажите, что центр группы является её нормальной подгруппой.\\}
+$Z(G) \triangleleft G$.\\
+\proof Покажем, что $Z(G)$ является подгруппой. Для того, чтобы $H$ было подгруппой: $\forall a, b \in H: ab^{-1} \in H$. Поэтому проверим, что $\forall a, b \in Z(G): ab^{-1} \in Z(G)$, т.е. $ab^{-1}g \stackrel{?}{=} gab^{-1}$.
+\begin{flalign*}
+ab^{-1}g & = ab^{-1}(g^{-1})^{-1} &&\\
+& = a (g^{-1} b)^{-1} &&\\
+& = a (b g^{-1})^{-1} &&\\
+& = a (g^{-1})^{-1} b^{-1} &&\\
+& = a g b^{-1} &&\\
+& = g a b^{-1} &&
+\end{flalign*}
+Т.е. $Z(G)$ -- подгруппа. $Z(G)$ -- это нормальная подгруппа, так как её элементы коммутируют с любыми элементами группы и $g Z(G) = Z(G) g$.\qed
+
+\textbf{8. Сформулируйте и докажите утверждение о том, чему изоморфна факторгруппа группы по её центру.\\}
+$G / Z(G) \cong \Inn{G}$.\\
+\proof Факторгруппа $G / Z(G)$ корректно определена, так как $Z(G) \triangleleft G$.\\
+Рассмотрим отображение $f: G \rightarrow \Aut{G}$, заданное формулой $f: g \mapsto \varphi_g(h) = g h g^{-1}$.\\
+Тогда $\Im{f} = \Inn{G}$ по определению и $\Ker{f} = Z(G)$, так как $\forall h \in G: \varphi_g(h) = ghg^{-1} = h = \mathrm{id}(h) \Leftrightarrow gh = hg$. Тогда это верно для тех элементов, которые коммутируют с любыми, т.е. элементов из центра.\\
+Применим теорему о гомоморфизме групп: $G / \Ker{f} \cong \Im{f}$ и получим, что $G / Z(G) \cong \Inn{G}$.\qed
+
+\textbf{9. Сформулируйте и докажите теорему Кэли.\\}
+Любая конечная группа порядка $n$ изоморфна некоторой подгруппе группы $\mathbf{S}_n$.\\
+\proof Пусть $|G| = n$. Рассмотрим отображение $L_a: G \rightarrow G$, определённое формулой $L_a(g) = a \cdot g$ -- умножение слева на элемент $a$.\\
+Покажем, что $L_a$ -- биекция.\\
+Пусть $e, g_2, g_3, \hdots, g_n$ -- элементы группы. Тогда $a \cdot e, a \cdot g_2, a \cdot g_3, \hdots, a \cdot g_n$ -- те же самые элементы, но в другом порядке. (Если $a g_i = a g_j \Leftrightarrow a^{-1} \cdot a \cdot g_i = a^{-1} \cdot a \cdot g_j \Leftrightarrow g_i = g_j$)\\
+Следовательно, $L_a$ -- перестановка элементов группы. При этом относительно операции композиции отображений $\forall L_a: \exists (L_a)^{-1} = L_{a^{-1}}$ -- существует обратный элемент и нейтральный элемент $\mathrm{id} = L_e$, а также выполняется ассоциативность.\\
+Из ассоциативности в $G$: $L_{ab}(g) = (a \cdot b) \cdot g = a \cdot (b \cdot g) = L_a\left(L_b(g)\right) \Leftrightarrow L_{ab} = L_a \circ L_b \Rightarrow$ множество $L_e, L_{g_2}, L_{g_3}, \hdots, L_{g_n}$ образуют подгруппу $H$ в группе $S(G)$ всех биективных отображений на себя, т.е. в $\mathbf{S}_n$.\\
+Искомый изоморфизм $f$: $a \in G \stackrel{f}{\mapsto} L_a \in H \subseteq \mathbf{S}_n$.\qed
+
+\textbf{10. Докажите, что характеристика поля может быть либо простым числом, либо нулем.\\}
+Характеристика поля может быть либо простым числом $p$, либо равна нулю.\\
+\proof Пусть $p \neq 0 \Rightarrow p \geq 2$ (найдутся $1$ и $0$, такие что $1 \neq 0$).\\
+Если $p = m \cdot k$, где $1 \leq m, k < p$ (т.е. $p$ -- составное), то $0 = \underbrace{1 + \hdots + 1}_{m \cdot k} = (\underbrace{1 + \hdots + 1}_m) \cdot (\underbrace{1 + \hdots + 1}_{k})$.\\
+Так как $m \cdot k = p$ минимально, то обе скобки не равны нулю $\Rightarrow$ $m$ и $k$ -- делители нуля, а их в поле нет по определению. Противоречие $\Rightarrow$ $p$ -- простое.\qed
+
+\textbf{11. Сформулируйте и докажите утверждение о том, каким будет простое подполе в зависимости от характеристики.\\}
+Пусть $P$ -- поле, а $P_0$ -- его простое подполе. Тогда:\\
+1) если $\Char{P} = p > 0$, то $P_0 \cong \Z_p$;\\
+2) если $\Char{P} = 0$, то $P_0 \cong \Q$.\\
+\proof Рассмотрим нейтральный элемент по умножению: $1 \in P$. $\left\langle 1 \right\rangle \subseteq \left( P, + \right)$ -- циклическая подгруппа по сложению, порождённая $1$.\\
+$\langle 1 \rangle$ является подкольцом в $P$. Так как любое подполе $P$ содержит $1$, то оно содержит и $\left\langle 1 \right\rangle$, т.е. $\left\langle 1 \right\rangle \subseteq P_0$.\\
+1) если $\Char{P} = p > 0$, то $\left\langle 1 \right\rangle \cong \Z_p$ -- поле $\Rightarrow P_0 = \left\langle 1 \right\rangle \cong \Z_p$.\\
+2) если $\Char{P} = 0$, то $\left\langle 1 \right\rangle \cong \Z$, однако $\Z$ не поле.\\
+В $P_0$ должны быть обратные элементы по умножению (все дроби вида $\frac{a}{b}$, где $a, b \in \left\langle 1 \right\rangle, b \neq 0$). Они все образуют подполе, изоморфное $\Q$.\qed
+
+\textbf{12. Сформулируйте и докажите критерий того, что кольцо вычетов по модулю $\boldsymbol{n}$ является полем.\\}
+$\Z_n$ является полем $\Leftrightarrow$ $n$ -- простое.\\
+\proof $\forall n: \Z_n$ является кольцом с единицей.\\
+Если $n$ является составным, то $n = m \cdot k$ и $\overline{m} \cdot \overline{k} = \overline{n} = \overline{0} \Rightarrow$ в кольце делитель нуля $\Rightarrow$ это не поле.\\
+Если $n = p$ -- простое, то рассмотрим $\overline{1}, \overline{2}, \hdots, \overline{p - 1}$ -- все классы вычетов, кроме нулевого $\overline{0}$.\\
+Возьмём произвольный элемент $\overline{s}$ и докажем, что $\exists \overline{s}^{-1}$, такой что $\overline{s} \overline{s}^{-1} = \overline{1}$. Рассмотрим множество $\left\{ \overline{s} \cdot \overline{1}, \overline{s} \cdot \overline{2}, \hdots, \overline{s} \cdot \overline{p - 1} \right\} = A; \overline{0} \not\in A$. (Так как $p$ -- простое, а среди чисел нет нуля или кратного $p$.)\\
+Заметим, что в $A$ стоят те же элементы, но в другом порядке (если $\overline{k_1} \cdot \overline{s} = \overline{k_2} \cdot \overline{s} \Leftrightarrow \left( \overline{k_1} - \overline{k_2} \right) \cdot \overline{s} = \overline{0}$, а это возможно только при $\overline{k_1} = \overline{k_2}$).\\
+Следовательно, в наборе $\overline{s}, \overline{s} \cdot 2, \hdots, \overline{s} \cdot \overline{p - 1}$ найдётся $1 \Rightarrow \exists \overline{s}^{-1}: \overline{s} \cdot \overline{s}^{-1} = 1 \Rightarrow$ произвольно взятый $\overline{s}$ обратим.\qed
+
+\textbf{13. Докажите, что ядро гомоморфизма колец является идеалом.\\}
+$\Ker{\varphi}$ (по сложению), где $\varphi : K_1 \rightarrow K_2$ -- гомоморфизм колец, всегда является идеалом в кольце $K_1$.\\
+\proof Идеал -- подгруппа в $\left( K_1, + \right)$, такая что $\forall a \in \Ker{\varphi}, \forall r \in K_1: a \cdot r \in \Ker{\varphi} \wedge r \cdot a \in \Ker{\varphi}$.\\
+Любой гомоморфизм колец является гомоморфизмом их аддитивных групп $\Rightarrow$ $\Ker{\varphi}$ является нормальной подгруппой в $\left( K_1, + \right)$.\\
+Пусть $a \in \Ker{\varphi}$, т.е. $\varphi (a) = 0$. Берём $a \cdot r$ и рассмотрим $\varphi (a \cdot r) = \varphi (a) \cdot \varphi (r) = 0 \cdot \varphi (r) = 0 \in \Ker{\varphi}$ и, аналогично, $\varphi (r \cdot a) = \varphi (r) \cdot 0 = 0 \in \Ker{\varphi}$.\qed
+
+\textbf{14. Сформулируйте и докажите утверждение о том, когда факторкольцо кольца многочленов над полем само является полем.\\}
+Факторкольцо $P[x] / \left\langle f(x) \right\rangle$ является полем $\Leftrightarrow$ $f(x)$ неприводим над полем $P$.\\
+\proof ($\Rightarrow$) От противного. Если $f(x) = f_1(x) \cdot f_2(x)$, где $0 < \deg f_1, \deg f_2 < \deg f$ -- т.е. $f$ не является неприводимым, то $\overline{f_1}, \overline{f_2} \in P[x] / \left\langle f(x) \right\rangle$ отличны от нуля, но $\overline{f_1(x)} \cdot \overline{f_2(x)} = \overline{f(x)} = \overline{0} \Rightarrow$ в $P[x] / \left\langle f(x) \right\rangle$ есть делители нуля $\Rightarrow$ это не поле.\\
+($\Leftarrow$) Покажем, что если $f(x)$ неприводим, то любой класс вычетов $\overline{a(x)} \neq \overline{0}$ обратим.\\
+Представитель $\overline{a(x)}$ -- это некоторый многочлен $a(x)$, такой что $\deg a(x) < \deg f(x)$. Так как $f(x)$ неприводим, то он взаимно прост с $a(x) \Rightarrow \exists b(x), c(x): a \cdot b + c \cdot f = 1 = \mathrm{\text{НОД}}(a, f)$, т.е. $\overline{a} \cdot \overline{b} + \overline{c} \cdot \overline{f} = \overline{1}$. $\overline{c} \cdot \overline{f} = \overline{0}$, поэтому: $\overline{a} \cdot \overline{b} = \overline{1} \mod \langle f(x) \rangle$, т.е. $\overline{b}$ -- обратный элемент к $\overline{a}$ в $P[x] / \left\langle f(x) \right\rangle \Rightarrow P[x] / \left\langle f(x) \right\rangle$ -- поле по определению.\qed
+
+\textbf{15. Выпишите и докажите формулу для описания изменения координат вектора при изменении базиса.\\}
+Пусть задано линейное пространство $L$, $x \in L$, $\A$ и $\B$ -- базисы в $L$; $x^a = \left( \begin{matrix}
+x_1^a \\
+x_2^a \\
+\vdots \\
+x_n^a
+\end{matrix} \right)$,
+$x^b = \left( \begin{matrix}
+x_1^b \\
+x_2^b \\
+\vdots \\
+x_n^b
+\end{matrix} \right)$ -- столбцы координат вектора $x$ в базисах $\A$ и $\B$ соответственно. Тогда $x^b = T_{\A \rightarrow \B}^{-1} x^a$.\\
+\proof Докажем, что $x^a = T_{\A \rightarrow \B} x^b$. Тогда из невырожденности матрицы перехода будет следовать нужная формула.
+\begin{flalign*}
+x & = \a \cdot x^a &&\\
+& = \left( \begin{matrix} a_1 & \hdots & a_n \end{matrix} \right) \cdot \left( \begin{matrix} x_1^a \\ \vdots \\ x_n^a \end{matrix} \right) &&\\
+& = x_1^a a_1 + \hdots + x_n^a a_n &&\\
+& = \b \cdot x^b &&
+\end{flalign*}
+$\b = \a \cdot T_{\A \rightarrow \B} \Rightarrow \a \cdot x^a = \a \cdot T_{\A \rightarrow \B} \cdot x^b$, а так как разложение по базису единственно, то $x^a = T_{\A \rightarrow \B} \cdot x^b \Rightarrow x^b = T_{\A \rightarrow \B}^{-1} \cdot x^a$.\qed
+
+\textbf{16. Выпишите формулу для преобразования матрицы билинейной формы при замене базиса и докажите её.\\}
+Пусть $B_e$ -- матрица билинейной формы в базисе $\e$, $B_f$ -- в базисе $\f$, а $U$ -- матрица перехода от базиса $\e$ к базису $\f$. Тогда $B_f = U^T \cdot B_e \cdot U$.\\
+\proof $b(x, y) = (x^e)^T \cdot B_e \cdot y^e$.\\ Здесь $x^e$ -- столбец координат $x$ в базисе $\e$ (аналогично для $y^e$).\\
+Подставим в первое равенство следующие выражения для $x^e$ и $y^e$:\\
+$\begin{cases}
+x^e = U x^f \\
+y^e = U y^f
+\end{cases}$\\
+Получим:
+\begin{flalign*}
+b(x, y) & = (x^e)^T \cdot B_e \cdot y^e &&\\
+& = (U x^f)^T \cdot B_e \cdot (U y^f) &&\\
+& = (x^f)^T \underbrace{\cdot U^T \cdot B_e \cdot U}_{B_f} \cdot y^f &&\\
+& = (x^f)^T \cdot B_f \cdot (y^f) &&
+\end{flalign*}
+Следовательно, $B_f = U^T \cdot B_e \cdot U$ (так как $x$ и $y$ -- произвольные векторы и можно выбрать векторы базиса).\qed
+
+\textbf{17. Выпишите формулу для преобразования матрицы линейного отображения при замене базиса и докажите её.\\}
+Пусть $\varphi$ -- линейное отображение из линейного пространства $V_1$ в линейное пространство $V_2$. Пусть $A_{\E_1 \E_2}$ -- матрица линейного отображения в паре базисов: $\E_1$ -- базис в $V_1$, $\E_2$ -- базис в $V_2$, и пусть даны две матрицы перехода: $T_1$ -- матрица перехода от $\E_1$ к $\E'_1$ -- в $V_1$,  $T_2$ -- от $\E_2$ к $\E'_2$ -- в $V_2$. Тогда $A_{\E'_1 \E'_2} = T_2^{-1} \cdot A_{\E_1 \E_2} \cdot T_1$.\\
+\proof $x^{\E_1'} = T_1^{-1} x^{\E_1}$ -- формула для замены координат в $V_1$.\\
+$x^{\E_2'} = T_2^{-1} x^{\E_2}$ -- формула для замены координат в $V_2$.\\
+Пусть $y$ -- образ $x$ под действием $\varphi$, т.е. $y = \varphi (x)$. Тогда, зная, что $\left( f(x) \right)^e = A_e x^e$, имеем $y^{\E_2} = A_{\E_1 \E_2} x^{\E_1}$ и $y^{\E_2'} = A_{\E_1' \E_2'} x^{\E_1'}$. Подставим: $T_2^{-1} y^{\E_2} = A_{\E_1' \E_2'} T_1^{-1} x^{\E_1} \Rightarrow y^{\E_2} = T_2 \cdot A_{\E_1' \E_2'} \cdot T_1^{-1} \cdot x^{\E_1}$, а $T_2 \cdot A_{\E_1' \E_2'} \cdot T_1^{-1} = A_{\E_1 \E_2}$, поэтому $A_{\E_1' \E_2'} = T_2^{-1} A_{\E_1 \E_2} \cdot T_1$.\qed
+
+\textbf{18. Cформулируйте и докажите три следствия из теоремы Лагранжа.\\}
+\textit{Следствие 1:} Пусть $G$ -- конечная группа и $g \in G$. Тогда порядок элемента $g$ делит порядок группы.\\
+\textit{Следствие 2:} Пусть $G$ -- конечная группа. Тогда $g^{\left\vert G \right\vert} = e$.\\
+\textit{Следствие 3 (Малая теорема Ферма):} Пусть $\overline{a}$ -- ненулевой вычет по простому модулю $p$. Тогда $\overline{a}^{p - 1} = \overline{1}$.\\
+\proof 1) Возьмём $H = \left\langle g \right\rangle$. Мы знаем, что $\left\vert \left\langle g \right\rangle \right\vert = \Ord{(g)}$. $\left\vert G \right\vert = \left\vert \left\langle g \right\rangle \right\vert \cdot \left[ G : \left\langle g \right\rangle \right]$, т.е. $\Ord{(g)}$ делит $\left\vert G \right\vert$.\\
+2) Применим следствие 1: $|G| = \Ord{(g)} \cdot s$ $\Rightarrow$ $g^{\left\vert G \right\vert} = g^{\Ord{(g)} \cdot s} = (g^{\Ord{(g)}})^s = e^s = e$.\\
+3) Это в точности следствие 2 ($g^{\left\vert G \right\vert} = e$), применённое к группе $\Z_p^* = \left( \Z_p \setminus \left\{ \overline{0} \right\}, \cdot \right)$: $\left\vert \Z_p^* \right\vert = p - 1$ и $\overline{a}^{\left\vert \Z_p^* \right\vert} = \overline{1} = e$.\qed
+
+\textbf{19. Что такое сумма и прямая сумма подпространств? Сформулируйте и докажите критерий того, что сумма подпространств является прямой.\\}
+\textit{Определения:} Множество $H_1 + H_2 = \left\{ x_1 + x_2 \mid x_1 \in H_1 \wedge x_2 \in H_2 \right\}$ называется суммой подпространств $H_1$ и $H_2$.\\
+Сумма подпространств $H_1$ и $H_2$ называется прямой и обозначается как $H_1 \oplus H_2$, если $H_1 \cap H_2 = \left\{ 0 \right\}$, т.е. тривиально.\\
+\textit{Критерий:} $H_1 + H_2$ -- прямая сумма $\Leftrightarrow$ $\forall x \in H_1 + H_2$ едиственным образом представляется в виде $x = x_1 + x_2$, где $x_1 \in H_1$, $x_2 \in H_2$.\\
+\proof ($\Rightarrow$) Предположим, что существует два таких разложения: $x = x_1 + x_2 = y_1 + y_2$, где $x_1, y_1 \in H_1$, $x_2, y_2 \in H_2$.\\
+Но тогда: $\underbrace{x_1 - y_1}_{\in H_1} = \underbrace{y_2 - x_2}_{\in H_2} = 0$ (так как пересечение тривиально) $\Rightarrow$ $x_1 = y_1$ и $x_2 = y_2$.\\
+($\Leftarrow$) Пусть представление единственно: $x = x_1 + x_2$. Если предположить, что $\exists x \neq 0: x \in H_1 \cap H_2$, то $\forall \alpha \in \F: \alpha x \in H_1$ (по определению подпространства) и $\alpha x \in H_2$. Тогда $\forall \beta \in \F: x = \underbrace{(1 - \beta) x}_{\in H_1} + \underbrace{\beta x}_{\in H_2}$ $\Rightarrow$ представление не единственно ($\beta$ -- любое число из $\F$). Противоречие.\qed
+
+\textbf{20. Сформулируйте и докажите утверждение о связи размерности суммы и пересечения подпространств.\\}
+Пусть $H_1$ и $H_2$ -- подпространства в $L$. Тогда $\Dim{(H_1 + H_2)} = \Dim{H_1} + \Dim{H_2} - \Dim{H_1 \cap H_2}$.\\
+\proof Рассмотрим базис $H_1 \cap H_2$. Дополним его до базиса в $H_1$ и до базиса в $H_2$.\\
+Пусть $\Dim{H_1} = n$, $\Dim{H_2} = m$, $\Dim{H_1 \cap H_2} = r$.\\
+Рассмотрим набор векторов $e_1, \hdots, e_r, v_1, \hdots, v_{n - r}, w_1, \hdots, w_{m - r}$, где $e_1, \hdots, e_r$ -- базис $H_1 \cap H_2$, $v_1, \hdots, v_{n - r}$ -- дополнение до базиса в $H_1$, $w_1, \hdots, w_{m - r}$ -- дополнение до базиса в $H_2$.\\
+Векторы из $H_1$ выражаются через $e_1, \hdots, e_r, v_1, \hdots, v_{n - r}$.\\
+Векторы из $H_2$ выражаются через $e_1, \hdots, e_r, w_1, \hdots, w_{m - r}$.\\
+Все эти векторы в совокупности составляют базис $H_1 + H_2$.\\
+Так как любой вектор из $H_1 + H_2$ может быть выражен через них, а также все векторы из данного набора линейно независимы (потому что $H_1$ и $H_2$ пересекаются по $e_1, \hdots, e_r$, а $v_i$ и $w_i$ лежат в \textit{разных} подпространствах) $\Rightarrow$ $\Dim{(H_1 + H_2)} = r + (n - r) + (m - r) = n + m - r = \Dim{H_1} + \Dim{H_2} - \Dim{H_1 \cap H_2}$.\qed
+
+\textbf{21. Сформулируйте и докажите (включая лемму) теорему об инвариантности ранга матрицы квадратичной формы.\\}
+Пусть $Q$ -- квадратичная форма на линейном пространстве $V$, $\a = \{a_1, \hdots, a_n\}$ и $\b = \{b_1, \hdots, b_n\}$ -- базисы в $V$. Пусть $A$ -- матрица $Q(x)$ в базисе $\a$, $B$ -- в базисе $\b$. Тогда $\Rg{A} = \Rg{B}$.\\
+\proof \textit{Лемма.} Пусть $A, S \in \mathbf{M}_n( \R ), \det S \neq 0$. Тогда $\Rg{(A \cdot S)} = \Rg{A} = \Rg{(S \cdot A)}$, т.е. умножение на невырожденную матрицу не меняет ранг матрицы $A$.\\
+$\triangleright$ $\Rg{(A \cdot S)} \leq \Rg{A}$, так как столбцы матрицы $A \cdot S$ -- это линейные комбинации столбцов матрицы $A$, и ранг -- максимальное количество линейно независимых столбцов (по теореме о ранге матрицы), а число линейно независимых столбцов не может вырасти.\\
+$\Rg{A} \geq \Rg{(A \cdot S)} \geq \Rg{\left( (A \cdot S) \cdot S^{-1} \right) } = \Rg{A} \Rightarrow \Rg{(A \cdot S)} = \Rg{A}$\hfill$\blacktriangleleft$\\
+Знаем, что $B = S^T \cdot A \cdot S$, где $S$ -- матрица перехода от базиса $\a$ к базису $\b$, а $\det S \neq 0$. Следовательно, по лемме, при умножении $A$ на невырожденные матрицы $S$ и $S^T$ её ранг не изменится $\Rightarrow$ $\Rg{B} = \Rg{A}$.\qed
+
+\textbf{22. Сформулируйте и докажите утверждение о связи размерностей ядра и образа линейного отображения.\\}
+Пусть $\varphi : V_1 \rightarrow V_2$ -- линейное отображение. Тогда $\Dim{\Ker{\varphi}} + \Dim{\Im{\varphi}} = \Dim{V_1} = m$.\\
+\proof Выберем базис в $V_1$: $\e = \{e_1, \hdots, e_m\}$. Тогда любой вектор $x$ можно представить в виде $x = x_1 e_1 + \hdots + x_m e_m$ $\Rightarrow$ $\varphi (x) = x_1 \varphi(e_1) + \hdots + x_m \varphi(e_m)$, т.е. $\Im{\varphi} = L(\varphi(e_1), \hdots, \varphi(e_m))$ $\Rightarrow$ $\Dim{\Im{\varphi}} = \Rg{A}$ -- рангу матрицы линейного отображения.\\
+Ядро линейного отображения записывается в виде СЛАУ $Ax = 0$ $\Rightarrow$ $\Dim{\Ker{\varphi}}$ -- это число элементов в ФСР ОСЛАУ $Ax = 0$. Но число элементов в ФСР -- это число неизвестных (а оно равно количеству векторов в базисе) за вычетом $\Rg{A}$, т.е.:\\
+$m - \Rg{A} = \Dim{\Ker{\varphi}} \Rightarrow \Dim{\Ker{\varphi}} + \Dim{\Im{\varphi}} = m$.\qed
+
+\rule{\linewidth}{0.3mm}
+
+\vspace{1mm}
+\begin{center}
+\begin{LARGE}
+\textsf{4 модуль}
+\end{LARGE}
+\end{center}
+\vspace{1mm}
+
+\textbf{1. Сформулируйте и докажите утверждение о связи характеристического уравнения и спектра линейного оператора.\\}
+$\lambda$ -- собственное значение линейного оператора $A$ $\Leftrightarrow$ $\lambda$ -- корень характеристического уравнения.\\
+\proof ($\Rightarrow$) По определению: $\lambda$ принадлежит спектру $\Leftrightarrow$ $\exists x \neq 0 : Ax = \lambda x$, т.е. $Ax = \lambda I x$, где $I$ -- тождественный оператор.\\
+$(A - \lambda I) x = 0$. Запишем это равенство в некотором базисе: $(A_e - \lambda E) \cdot x^e = 0$. Здесь $A_e$ -- матрица линейного оператора в базисе $\e$, $x^e$ -- столбец координат вектора $x$ в базисе $\e$. Это ОСЛАУ. Она имеет ненулевое решение $\Rightarrow$ $\det (A_e - \lambda E) = 0$ -- характеристическое уравнение, т.е. $\lambda$ -- корень характеристического уравнения.\\
+($\Leftarrow$) Если $\lambda$ -- корень характеристического уравнения, то в заданном базисе выполняется равенство $\det (A_e - \lambda E) = 0$ $\Rightarrow$ соответствующая СЛАУ с матрицей $(A_e - \lambda E)$ имеет ненулевое решение (по критерию существования нетривиального решения ОСЛАУ с квадратной матрицей). Обозначим это решение $x^e$. Его можно интерпретировать как набор координат некоторого вектора, для которого выполняется $(A - \lambda I)x = 0, x \neq 0$. А это по определению означает, что $x$ -- собственный вектор, а $\lambda$ -- собственное значение.\qed
+
+\textbf{2. Сформулируйте и докажите утверждение о том, каким свойством обладают собственные векторы линейного оператора, отвечающие различным собственным значениям.\\}
+Пусть $\lambda_1, \hdots, \lambda_k$ -- собственные значения линейного оператора $A$, причём $\forall i \forall j \neq i: \lambda_i \neq \lambda_j$, а $v_1, \hdots, v_k$ -- соответствующие собственные векторы. Тогда $v_1, \hdots, v_k$ линейно независимы.\\
+\proof Докажем утверждение по индукции.\\
+При $k = 1$ всё верно: так как собственный вектор по определению ненулевой и, соответственно, линейно независим.\\
+Пусть утверждение верно для $k = m$. Добавим ещё один собственный вектор $v_{m+1}$. Докажем, что система $v_1, \hdots, v_m, v_{m+1}$ осталась линейно независимой.\\
+Рассмотрим равенство\\
+$\alpha_1 v_1 + \hdots + \alpha_m v_m + \alpha_{m+1} v_{m+1} = 0$\hfill$(1)$\\
+Применим к нему линейный оператор $A$ и получим равенство\\
+$\alpha_1 \lambda_1 v_1 + \hdots + \alpha_m \lambda_m v_m + \alpha_{m+1} \lambda_{m+1} v_{m+1} = 0$\hfill$(2)$\\
+Умножим (1) на $\lambda_{m+1}$ и вычтем его из (2):
+$$\alpha_1 (\lambda_1 - \lambda_{m+1}) v_1 + \hdots + \alpha_m (\lambda_m - \lambda_{m+1}) v_m = 0$$
+Все $\lambda_i$ различны, а $v_1, \hdots, v_m$ -- линейно независимы, а значит:
+$\begin{cases}\alpha_1 (\lambda_1 - \lambda_{m+1}) = 0 \\
+\vdots \\
+\alpha_m (\lambda_m - \lambda_{m+1}) = 0\end{cases}$
+$\stackrel{\text{различность}}{\Rightarrow}$ $\alpha_1 = \hdots = \alpha_m = 0 \Rightarrow$ (1) можно записать в виде $\alpha_{m+1} v_{m+1} = 0$, а так как $v_{m+1}$ -- собственный вектор, то $v_{m+1} \neq 0 \Rightarrow \alpha_{m+1} = 0$. Все $\alpha_i = 0$, а значит $v_1, \hdots, v_{m+1}$ линейно независимы по определению.\qed
+
+\textbf{3. Сформулируйте и докажите критерий диагональности матрицы оператора.\\}
+Матрица линейного оператора является диагональной в данном базисе $\Leftrightarrow$ все векторы базиса являются собственными векторами для данного линейного оператора.\\
+\proof ($\Rightarrow$) По определению матрицы линейного оператора, в $j$-м столбце стоят координаты вектора $\A(e_j)$ в базисе $\e$. Если матрица диагональна, то её $j$-й столбец имеет вид
+$\left( \begin{matrix}
+0 \\
+\vdots \\
+0 \\
+\lambda_j \\
+0 \\
+\vdots \\
+0
+\end{matrix} \right)$, то есть $\A(e_j) = 0 \cdot e_1 + \hdots + 0 \cdot e_{j - 1} + \lambda_j e_j + 0 \cdot e_{j+1} + \hdots + 0 \cdot e_n \Rightarrow Ae_j = \lambda_j e_j$, то есть по определению собственного вектора, $e_j$ -- собственный вектор с собственным значением $\lambda_j$. Он не равен нулю, так как это элемент базиса, а там не бывает нулевых векторов. Так как это верно для любых $j = \overline{1, n}$, то все базисные векторы собственные, а на диагонали стоят собственные значения.\\
+($\Leftarrow$) По определению собственного вектора: $Ae_j = \lambda_j e_j \Rightarrow$ если записать по определению матрицу линейного оператора, то все элементы, кроме диагональных будут нулевыми, а на диагонали будет стоять число $\lambda_j$.\qed
+
+\textbf{4. Каким свойством обладает оператор в $\boldsymbol{n}$-мерном вещественном пространстве, у характеристического многочлена которого есть $\boldsymbol{n}$ различных действительных корней? Ответ обоснуйте.\\}
+Если характеристическое уравнение линейного оператора, действующего в $V$, где $\Dim{V} = n$, имеет $n$ попарно различных корней, то линейный оператор диагонализируем.\\
+\proof Если $\lambda_i \in \R$ -- корень характеристического уравнения, то ему можно сопоставить хотя бы один собственный вектор $v_i$. Но система векторов $v_1, \hdots, v_n$ (отвечающая различным собственным значениям) будет линейно независимой, а их число равно $\Dim{V} \Rightarrow$ они образуют базис в $V$, и этот базис состоит из собственных векторов $\Rightarrow$ в нём матрица линейного оператора диагональна.\qed
+
+\textbf{5. Выпишите и докажите неравенство Коши–-Буняковского. Выпишите и докажите неравенство треугольника.\\}
+\textit{Неравенство Коши--Буняковского:} $\forall x, y \in \E: \left\vert g(x, y) \right\vert \leq \left\| x \right\| \cdot \left\| y \right\|$\\
+\proof $\forall \alpha \in \R : g(\alpha x - y, \alpha x - y) \geq 0$ (скалярное произведение положительно определено). Раскроем по линейности: $\alpha \cdot g(x, \alpha x - y) - g(y, \alpha x - y) = \alpha^2 \cdot g(x, x) - \alpha \cdot g(x, y) - \alpha \cdot g(y, x) + g(y, y)$. По симметричности имеем, что выражение выше равно $\alpha^2 \cdot g(x, x) - 2\alpha \cdot g(x, y) + g(y, y) = \alpha^2 \left\| x \right\|^2 - 2\alpha \cdot g(x, y) + \left\| y \right\|^2 \geq 0 \quad (\forall \alpha \in \R)$, то есть $D \leq 0$ -- квадратное уравнение имеет не более одного корня.\\
+$D = 4\alpha^2 \cdot g(x, y)^2 - 4\alpha^2 \left\| x \right\|^2 \cdot \left\| y \right\|^2 \leq 0 \Rightarrow |g(x, y)| \leq \left\| x \right\| \cdot \left\| y \right\|$.\qed\\
+\textit{Неравенство треугольника:} $\forall x, y \in \E: \left\| x + y \right\| \leq \left\| x \right\| + \left\| y \right\|$.\\
+\proof $\left\| x + y \right\|^2 = g(x + y, x + y) = g(x, x) + 2g(x, y) + g(y, y) \stackrel{\text{К.--Б.}}{\leq} \left\| x \right\|^2 + 2 \left\| x \right\| \left\| y \right\| + \left\| y \right\|^2 = \left( \left\| x \right\| + \left\| y \right\| \right)^2$, и обе части (т.е. $\left\| x + y \right\|$ и $\left\| x \right\| + \left\| y \right\|$) неотрицательны $\Rightarrow$ выполнено неравенство треугольника.\qed
+
+\textbf{6. Докажите теорему о том, что евклидово пространство можно представить в виде прямой суммы подпространства и его ортогонального дополнения.\\}
+Если $H$ -- подпространство в линейном пространстве $V$, то $V$ можно представить в виде $V = H \oplus H^\perp$, где $H^\perp$ -- ортогональное дополнение.\\
+\proof Легко проверить, что $H^\perp$ -- подпространство в $V$: оно замкнуто относительно операции сложения и умножения на число.\\
+$H^\perp$ является подпространством в $V$, поэтому можем рассмотреть $H + H^\perp$. Нужно доказать, что сумма -- прямая и $V = H + H^\perp$.\\
+Если $x \in H \cap H^\perp$, то $g(x, x) = 0 \stackrel{\text{невырожденность } g}{\Leftrightarrow} x = 0$, т.е. $H \cap H^\perp = \{0\} \Rightarrow$ сумма прямая.\\
+Пусть $f_1, \hdots, f_m$ -- ортонормированный базис в $H$ (он всегда существует). Дополним его до базиса в $V$ векторами $f_{m+1}, \hdots, f_n$. Применим процесс ортогонализации Грама--Шмидта. Получим $\underbrace{f_1, \hdots, f_m}_{\text{уже были ОНБ}}, \underbrace{e_{m+1}, \hdots, e_n}_{\text{новые векторы}}$.\\
+$e_{m+1}, \hdots, e_n$ ортогональны $f_1, \hdots, f_m$ (базис в $H$) $\Rightarrow$ они ортогональны всему $H$, и любой вектор из $V$ можно представить в виде $x = \underbrace{x_1 f_1 + \hdots + x_m f_m}_{\in H} + \underbrace{x_{m+1}e_{m+1} + \hdots + x_n e_n}_{\in H^\perp}$, т.е. $\forall x \in V: x = y + z$, где $y = x_1 f_1 + \hdots x_m f_m \in H$, $z = x_{m+1} e_{m+1} + \hdots + x_n e_n \in H^\perp$. А это и означает, что $V = H \oplus H^\perp$.\qed
+
+\textbf{7. Выпишите формулу для преобразования матрицы Грама при переходе к новому базису и докажите её. Что происходит с определителем матрицы Грама при применении процесса ортогонализации Грама--Шмидта? Что можно сказать про знак определителя матрицы Грама? Ответы обоснуйте.\\}
+Пусть $\Gamma$ и $\Gamma'$ -- матрицы Грама в базисах $\e$ и $\eprime$ соответственно, а $U$ -- матрица перехода от базиса $\e$ к базису $\eprime$. Тогда $\Gamma' = U^T \Gamma U$.\\
+\proof Эта формула верна, так как матрица Грама $\Gamma$ -- это матрица билинейной формы $g(x, y)$.\qed\\\\
+Определитель матрицы Грама (грамиан) не изменяется при применении процесса ортогонализации Грама--Шмидта.\\
+\proof $\Gr{a_1, \hdots, a_k} = \det \Gamma(a_1, \hdots, a_k)$.\\
+Матрица перехода от базиса $a_1, \hdots, a_n$ к ортогональному (не нормированному) базису $b_1, \hdots, b_n$ имеет вид $U_{\a \rightarrow \b} = \left( \begin{matrix}
+1 & * & * & \hdots & * & * \\
+0 & 1 & * & \hdots & * & * \\
+0 & 0 & 1 & \hdots & * & * \\
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & \hdots & 1 & * \\
+0 & 0 & 0 & \hdots & 0 & 1
+\end{matrix} \right)$ (из процесса Грама--Шмидта) $\Rightarrow \det U_{\a \rightarrow \b} = 1$.\\
+$\det \Gamma_\b = \det(U^T \Gamma_\a U) = (\det U)^2 \cdot \det \Gamma_\a = 1 \cdot \det \Gamma_\a = \det \Gamma_\a$.\qed\\\\
+Определитель матрицы Грама положительный.\\
+\proof $\det \Gamma' = \det (U^T \Gamma U) = \det U^T \cdot \det \Gamma \cdot \det U = \underbrace{(\det U)^2}_{> 0} \cdot \det \Gamma$, и перейдём к ортонормированному базису (в конечномерном пространстве это можно сделать всегда). В нём $\Gamma' = E \Rightarrow \det \Gamma' = 1 \Rightarrow 1 = (\det U)^2 \cdot \det \Gamma \Rightarrow \det \Gamma > 0$.\qed
+
+\textbf{8. Сформулируйте и докажите критерий линейной зависимости набора векторов с помощью матрицы Грама.\\}
+Векторы $a_1, \hdots, a_k \in \E$ линейно независимы $\Leftrightarrow$ $\Gr{a_1, \hdots, a_k} \neq 0$.\\
+\proof Рассмотрим линейную комбинацию векторов $a_1, \hdots, a_k$:\\
+$\alpha_1 a_1 + \hdots + \alpha_k a_k = 0$. Умножим это равенство скалярно на векторы $a_1, \hdots, a_k$:\\
+$\begin{cases}
+\alpha_1 (a_1, a_1) + \alpha_2 (a_1, a_2) + \hdots + \alpha_k (a_1, a_k) = 0 \\
+\vdots \\
+\alpha_1 (a_k, a_1) + \alpha_2 (a_k, a_2) + \hdots + \alpha_k (a_k, a_k) = 0
+\end{cases}$\\
+Это ОСЛАУ на коэффициенты $\alpha_1, \hdots, \alpha_k$, т.е. СЛАУ вида $\Gamma (a_1, \hdots, a_k) \cdot \alpha = 0$.\\
+Это ОСЛАУ с квадратной матрицей. У неё существует нетривиальное решение (т.е. векторы линейно зависимы по определению) $\Leftrightarrow$ $\det \Gamma = 0$. И, соответственно, $a_1, \hdots, a_k$ линейно независимы $\Leftrightarrow$ $\det \Gamma \neq 0$.\qed
+
+\textbf{9. Выпишите формулу для ортогональной проекции вектора на подпространство, заданное как линейная оболочка данного линейно независимого набора векторов, и докажите её.\\}
+Пусть $H = L(a_1, \hdots, a_k)$, а $a_1, \hdots, a_k$ линейно независимы. Тогда $y = \mathrm{pr}_H x = A \cdot (A^T A)^{-1} \cdot A^T \cdot x$, где матрица $A$ составлена из столбцов координат векторов $a_1, \hdots, a_k$ в некотором ортонормированном базисе.\\
+\proof $y = \mathrm{pr}_H x = \alpha_1 a_1 + \hdots + \alpha_k a_k \in H$ (т.е. $x = \underbrace{\alpha_1 a_1 + \hdots + \alpha_k a_k}_{\in H} + \underbrace{h^\perp}_{\in H^\perp}$). Теперь последовательно скалярно умножим равенство $x = \alpha_1 a_1 + \hdots + \alpha_k a_k + h^\perp$ на $\alpha_1, \hdots, \alpha_k$:\\
+$\begin{cases}
+\alpha_1 (a_1, a_1) + \alpha_2 (a_1, a_2) + \hdots + \alpha_k (a_1, a_k) = (a_1, x)\\
+\vdots\\
+\alpha_1 (a_k, a_1) + \alpha_2 (a_k, a_2) + \hdots + \alpha_k (a_k, a_k) = (a_k, x)
+\end{cases}$\\
+Отметим, что $h^\perp$ исчезает, так как оно ортогонально всем векторам набора $a_1, \hdots, a_k$.\\
+В матричной форме: $\Gamma (a_1, \hdots, a_k) \cdot \alpha = A^T \cdot x \Leftrightarrow \underbrace{A^T A}_{\Gamma} \cdot \alpha = A^T \cdot x$.\\
+Так как $a_1, \hdots, a_k$ линейно независимы, то $\det \Gamma \neq 0$ $\Rightarrow$ к ней существует обратная матрица размера $k \times k$ $\Rightarrow$ $\Gamma \cdot \alpha = A^T \cdot x \Rightarrow \alpha = \Gamma^{-1} \cdot A^T \cdot x = (A^T A)^{-1} A^T x = \left(\begin{matrix}\alpha_1 \\ \vdots \\ \alpha_k \end{matrix}\right)$.\\
+$y = \mathrm{pr}_H x = \alpha_1 a_1 + \hdots + \alpha_k a_k = A \cdot \alpha \stackrel{\text{подставим } \alpha}{=} A \cdot (A^T A)^{-1} \cdot A^T \cdot x$.\qed
+
+\textbf{10. Докажите, что для любого оператора в конечномерном евклидовом пространстве существует единственный сопряжённый оператор.\\}
+Для любого линейного оператора в евклидовом пространстве существует единственный сопряжённый оператор $\A^* : \E \rightarrow \E$.\\
+\proof Покажем, что линейный оператор с матрицей $B = \Gamma^{-1} A^T \Gamma$ является сопряжённым к данному. Проверим выполнение равенства $\forall x, y \in \E: (Ax, y) = (x, By)$.\\
+Пусть $x^b, y^b$ -- столбцы координат векторов $x$ и $y$ в базисе $\b$. Тогда $(Ax)^b = A_b x^b$ (доказано ранее) и $(x, y) = x^T \Gamma y$ -- матричная запись скалярного произведения.\\
+$((Ax)^b)^T \cdot \Gamma \cdot y^b = (x^b)^T \cdot \Gamma \cdot (By)^b$\\
+$(A_b x^b)^T \cdot \Gamma \cdot y^b = (x^b)^T \cdot \Gamma \cdot B_b y^b$\\
+$(x^b)^T \cdot A_b^T \Gamma \cdot y^b = (x^b)^T \cdot \Gamma B_b \cdot y^b$\\
+Отсюда следует, что $A_b^T \Gamma = \Gamma B_b \Rightarrow B_b = \Gamma^{-1} \cdot A_b^T \cdot \Gamma$ (обратная к $\Gamma$ существует, так как её определитель всегда положителен).\qed
+
+\textbf{11. Сформулируйте и докажите свойство собственных векторов самосопряжённого оператора, отвечающих разным собственным значениям.\\}
+Собственные векторы самосопряжённого линейного оператора, отвечающие различным собственным значениям, ортогональны.\\
+\proof Пусть $Ax_1 = \lambda_1 x_1, x_1 \neq 0$; $Ax_2 = \lambda_2 x_2, x_2 \neq 0$, и притом $\lambda_1 \neq \lambda_2$. (То есть $x_1, x_2$ -- собственные векторы с соответствующими собственными значениями $\lambda_1, \lambda_2$.)\\
+$(Ax_1, x_2) = (\lambda_1 x_1, x_2) = \lambda_1 (x_1, x_2)$\\
+$(x_1, Ax_2) = (x_1, \lambda_2 x_2) = \lambda_2 (x_1, x_2)$\\
+Однако $(Ax_1, x_2) = (x_1, Ax_2)$, так как оператор самосопряжённый, а значит $(\lambda_1 - \lambda_2) (x_1, x_2) = 0$, $\lambda_1 - \lambda_2 \neq 0$, так как $\lambda_1$ и $\lambda_2$ различны, поэтому $(x_1, x_2) = 0 \Rightarrow x_1$ и $x_2$ ортогональны.\qed
+
+\textbf{12. Каким свойством обладают собственные значения самосопряжённого оператора? Ответ обоснуйте.\\}
+Все корни характеристического уравнения самосопряжённого линейного оператора являются действительными числами.\\
+\proof Пусть $\tilde{\lambda} \in \C$ -- корень уравнения $\chi_A ( \lambda ) = 0$, т.е. $\det(A - \tilde{\lambda} E) = 0$. Тогда СЛАУ $(A - \tilde{\lambda} E) x = 0$, которое назовём (1), имеет ненулевое решение $x = \left( \begin{matrix}
+x_1 \\
+\vdots \\
+x_n
+\end{matrix} \right)$, состоящее из $x_k \in \C \quad (k = \overline{1, n})$.\\
+Рассмотрим $\overline{x}$ -- столбец
+$\left( \begin{matrix}
+\overline{x_1} \\
+\vdots \\
+\overline{x_n}
+\end{matrix} \right)$ комплексно-сопряжённых элементов.\\
+Умножим (1) на $\overline{x}^T$ слева:\\
+$\overline{x}^T (A - \tilde{\lambda} E) x = 0 \Leftrightarrow \overline{x}^T A x - \tilde{\lambda} \overline{x}^T x = 0$; $\overline{x}^T x = \overline{x_1} x_1 + \hdots + \overline{x_n} x_n = \underbrace{|x_1|^2 + \hdots |x_n|^2}_{\in \R} > 0$, так как решение ненулевое (собственный вектор) $\Rightarrow$ $\tilde{\lambda} = \frac{\overline{x}^T A x}{\overline{x}^T x}$.\\
+Если докажем, что $z = \overline{x}^T A x \in \R$, то $\tilde{\lambda} \in \R$.\\
+$z = \overline{x}^T A x \stackrel{z \text{-- число}}{=} z^T = (\overline{x}^T A x)^T = x^T A^T (\overline{x}^T)^T = x^T A^T \overline{x} \stackrel{\text{в ОНБ: } A = A^T}{=} x^T A \overline{x}$\\
+$\overline{z} = \overline{\overline{x}^T A x} = \overline{\overline{x}}^T \overline{A} \overline{x} \stackrel{a_{ij} \in \R}{=} x^T A \overline{x}$\\
+Следовательно, $z = \overline{z} \Rightarrow z \in \R \Rightarrow \tilde{\lambda} = \frac{z}{\overline{x}^T x} \in \R$.\qed
+
+\textbf{13. Сформулируйте теорему о существовании для самосопряжённого оператора базиса из собственных векторов. Приведите доказательство в случае различных вещественных собственных значений.\\}
+Для любого самосопряжённого линейного оператора $\A$ существует ортонормированный базис, состоящий из его собственных векторов.\\
+\proof Так как собственные значения самосопряжённого оператора $\lambda_1, \hdots, \lambda_n$ попарно различны, то, выбрав для каждого собственного значения соответствующий ему собственный вектор, получим систему ненулевых векторов.\\
+По утверждению об ортогональности собственных векторов, отвечающих различным собственным значениям, это будет ортогональная система. По ранее доказанному утверждению она линейно независима и содержит $n$ векторов, а следовательно, является базисом в $\E$ (т.к. $\Dim{\E} = n$). Это ортогональный базис. Чтобы получить ортонормированный базис, нужно поделить каждый вектор на его норму. Векторы не перестают быть собственными $\Rightarrow$ это искомый базис.\qed
+
+\textbf{14. Сформулируйте и докажите теорему о том, что ортогональный оператор переводит ортонормированный базис в ортонормированный. Верно ли обратное? Ответ обоснуйте.\\}
+Пусть $\A : \E \rightarrow \E$ -- линейный оператор. Тогда $\A$ -- ортогональный линейный оператор $\Leftrightarrow$ ортонормированный базис $e_1, \hdots, e_n$ переходит в другой ортонормированный базис $Ae_1, \hdots, Ae_n$.\\
+\proof ($\Rightarrow$) $(Ae_i, Ae_j) \stackrel{A \text{ -- ортог. л.о.}}{=} (e_i, e_j) = \delta_j^i = \begin{cases}
+1, i = j \\
+0, i \neq j
+\end{cases}$, т.е. система векторов $Ae_1, \hdots, Ae_n$ состоит из ненулевых векторов, и они попарно ортогональны -- это ортонормированный базис. Их $n$ $\Rightarrow$ это базис в $\E$.\\
+($\Leftarrow$) $x \mapsto (x_1, \hdots, x_n)^T$ в базисе $e_1, \hdots, e_n$ (сопоставление вектору набора координат)\\
+Заметим, что $Ax \mapsto (x_1, \hdots, x_n)^T$ в базисе $Ae_1, \hdots, Ae_n$, так как $Ax = A(x_1 e_1 + \hdots + x_n e_n) \stackrel{A \text{-- л.о.}}{=} x_1 Ae_1 + \hdots + x_n Ae_n$.\\
+Найдём скалярные произведения в ортоноромированном базисе $e_1, \hdots, e_n$ и $(Ae_1, \hdots, Ae_n)$\\
+Так как координаты не меняются, то $\forall x, y \in \E:$\\
+$\bullet$ $(x, y) = x_1 y_1 + \hdots + x_n y_n$ -- в ортонормированном базисе $e_1, \hdots, e_n$\\
+$\bullet$ $(Ax, Ay) = x_1 y_1 + \hdots + x_n y_n$ -- в ортонормированном базисе $Ae_1, \hdots, Ae_n$\\
+Следовательно, по определению, $\A$ -- ортогональный линейный оператор.\qed
+
+\textbf{15. Сформулируйте и докажите критерий ортогональности оператора, использующий его матрицу.\\}
+Матрица линейного оператора $\A$ в ортонормированном базисе ортогональна $\Leftrightarrow$ $\A$ -- ортогональный оператор.\\
+\proof ($\Rightarrow$) По определению: $A_e$ ортогональна $\Leftrightarrow$ $A_e^T \cdot A_e = E \Rightarrow \forall x, y \in \E$, если рассмотреть их координаты в базисе $e_1, \hdots, e_n$: $x \mapsto \left( \begin{matrix}
+x_1 \\
+\vdots \\
+x_n
+\end{matrix} \right)$,
+$y \mapsto \left( \begin{matrix}
+y_1 \\
+\vdots \\
+y_n
+\end{matrix} \right)$, 
+будет выполнено:
+$$\underbrace{\left( \begin{matrix} x_1 & \hdots & x_n \end{matrix} \right) \cdot \left( A_e^T A_e \right) \cdot \left( \begin{matrix}
+y_1 \\
+\vdots \\
+y_n
+\end{matrix} \right)}_{\text{это } (Ax, Ay): \left[ A_e \left( \begin{matrix} x_1 \\ \vdots \\ x_n \end{matrix} \right) \right]^T \cdot \left[ A_e \left( \begin{matrix} y_1 \\ \vdots \\ y_n \end{matrix} \right) \right] } = 
+\underbrace{\left( \begin{matrix} x_1 & \hdots & x_n \end{matrix} \right) \cdot E \cdot \left( \begin{matrix}
+y_1 \\
+\vdots \\
+y_n
+\end{matrix} \right)}_{(x, y) \text{ в ОНБ}}$$
+Т.е. $\forall x, y \in \E: (Ax, Ay) = (x, y) \Rightarrow$ по определению, $A$ -- ортогональный линейный оператор.\\
+($\Leftarrow$) По определению: $\forall x, y \in \E: (Ax, Ay) = (x, y)$.\\
+В любом ортонормированном базисе это можно записать в координатах:\\
+$(A_e x^e)^T \cdot E \cdot (A_e y^e) = (x^e)^T \cdot (y^e)$, так как $(x, y) = x^T \cdot \Gamma \cdot y, \Gamma = E$.\\
+Следовательно, $(x^e)^T A_e^T A_e y^e = (x^e)^T \cdot E \cdot (y^e) \stackrel{\text{по лемме}}{\Rightarrow} A_e^T A_e = E$.\qed
+
+\textbf{16. Сформулируйте и докажите утверждение о QR-разложении.\\}
+Пусть $A \in \mathbf{M}_m (\R)$, а её столбцы $A_1, \hdots, A_m$ линейно независимы. Тогда существуют матрицы $Q$ и $R$, такие что $A = QR$, где $Q$ -- ортогональная, а $R$ -- верхнетреугольная матрица.\\
+\proof Применим к столбцам $A_1, \hdots, A_m$ процесс ортогонализации Грама--Шмидта. Получим столбцы $Q_1, \hdots, Q_m$ -- ортонормированный базис в $\Im{\A}$. Заметим, что $A_k \in L(Q_1, \hdots, Q_k)$, $k = \overline{1, m}$ (по формулам Грама--Шмидта мы используем только столбцы с меньшими или равными номерами) $\Rightarrow$ $A_k = \sum_{i = 1}^k \Gamma_{ik} Q_i$, где $k = \overline{1, m}$, или в матричной форме: $A = Q \cdot R$, где $Q = (Q_1 | \hdots | Q_m)$, а $R = \left( \begin{matrix}
+\Gamma_{11} & \hdots & \Gamma_{1m} \\
+\vdots & \ddots & \vdots \\
+0 & \hdots & \Gamma_{mm}
+\end{matrix} \right)$.\qed
+
+\textbf{17. Сформулируйте и докажите теорему о сингулярном разложении.\\}
+Для любой прямоугольной матрицы $A \in \mathbf{M}_{mn} (\R)$ имеет место следующее разложение:
+$$A = V \cdot \Sigma \cdot U^T \text{-- сингулярное разложение},$$
+где $U \in \mathbf{O}_n (\R)$ -- ортогональная матрица размера $n \times n$, $V \in \mathbf{O}_m (\R)$ -- ортогональная матрица размера $m \times m$, а $\Sigma \in \mathbf{M}_{mn} (\R)$ -- диагональная матрица с числами $\sigma_i \geq 0$ на диагонали. (Договариваются, что $\sigma_1 \geq \sigma_2 \geq \hdots \sigma_r > 0$, где $r = \Rg{A}$.)\\
+\proof Рассмотрим $A^T A$ (матрицу Грама). Она является симметрической и соответствующая квадратичная форма неотрицательно определена, т.е.:
+$$x^T \underbrace{A^T A}_{\Gamma} x \stackrel{\text{в исходном ОНБ}}{=} (Ax, Ax) = \left\| Ax \right\|^2 \geq 0 \quad \forall x \in \R^n.$$
+Следовательно, существуют все собственные значения (т.е. принадлежат $\R$ для самосопряжённого оператора $A^T A$) и они неотрицательны. Запишем эти собственные значения в виде $\sigma_i^2$ (любое неотрицательное число можно записать в таком виде). Отсортируем по невозрастанию: $\sigma_1 \geq \sigma_2 \geq \hdots \geq \sigma_r > \sigma_{r+1} = 0$, и существует ортонормированный базис $u_1, \hdots, u_n$ -- из собственных векторов $A^T A$, т.е. $A^T A u_i = \begin{cases} \sigma_i^2 u_1, \quad 1 \leq i \leq r \\
+0, \quad r+1 \leq i \leq n\end{cases}$\\
+Положим $v_i := \frac{A u_i}{\sigma_i}$, $1 \leq i \leq r$. Тогда
+$$(v_i, v_j) = \begin{cases}
+(\frac{A u_i}{\sigma_i}, \frac{A u_i}{\sigma_i}) = 1, \quad i = j \\
+0, \quad i \neq j
+\end{cases}$$
+Получаем векторы $v_1, \hdots, v_r$. Они образуют ортонормированную систему. Дополним её векторами $v_{r+1}, \hdots, v_m$ до ортонормированного базиса в $\R^m$. Тогда $v_1, \hdots, v_m$ и $u_1, \hdots, u_m$ -- это ортонормированные базисы. В итоге:
+$$A \cdot [\underbrace{u_1, \hdots, u_n}_{\text{столбцы } U}] = [\underbrace{v_1, \hdots, v_m}_{\text{столбцы } V}] \cdot \left( \begin{matrix}
+\sigma_1 & \hdots &     0    &    0   & \hdots &    0   \\
+ \vdots  & \ddots &  \vdots  & \vdots & \ddots & \vdots \\
+    0    & \hdots & \sigma_r &    0   & \hdots &    0   \\
+    0    & \hdots &     0    &    0   & \hdots &    0   \\
+ \vdots  & \ddots &  \vdots  & \vdots & \ddots & \vdots \\
+    0    & \hdots &     0    &    0   & \hdots &    0       
+\end{matrix} \right)$$
+$v_i = \frac{A u_i}{\sigma_i} \Leftrightarrow A u_i = v_i \sigma_i$.\\
+Матрицы $U$ и $V$ ортогональны. \qed
+
+\textbf{18. Сформулируйте и докажите теорему о полярном разложении.\\}
+Любой линейный оператор в евклидовом пространстве представляется в виде композиции симметрического и ортогонального: $A = S \cdot U$, где $S$ -- матрица симметрического оператора, а $U$ -- ортогонального.\\
+\proof Возьмём сингулярное разложение:\\
+$A = Q \cdot \Sigma \cdot P^T$, где $Q, P$ -- ортогональные матрицы.\\
+$A = Q \cdot \Sigma \cdot \underbrace{Q^T \cdot Q}_{E} \cdot P^T$. Обозначим за $S$ произведение $Q \cdot \Sigma \cdot Q^T$, а за $U$ -- произведение $Q \cdot P^T$.\\
+$S^T = (Q \cdot \Sigma \cdot Q^T)^T = (Q^T)^T \cdot \Sigma^T \cdot Q^T \stackrel{\Sigma^T = \Sigma}{=} Q \cdot \Sigma \cdot Q^T = S$, значит $S$ -- симметрическая матрица.\\
+$U$ -- произведение двух ортогональных матриц, а значит $U$ ортогональна.\qed
+
+\textbf{19. Сформулируйте и докажите теорему о приведении квадратичных форм к диагональному виду при помощи ортогональной замены координат.\\}
+Любую квадратичную форму можно ортогональным преобразованием привести к каноническому виду.\\
+\proof Матрица квадратичной формы является симметрической. Рассмотрим $n$-мерное (пусть исходная матрица имеет размер $n \times n$) евклидово пространство $\E$ и некоторый ортонормированный базис в нём.\\
+Тогда матрица квадратичной формы $B$ является матрицей некоторого \textit{самосопряжённого} линейного оператора, так как $B = B^T$ по определению матрицы квадратичной формы. Пусть матрица $A$ совпадает с $B$.\\
+По теореме о существовании для самосопряжённого линейного оператора ортонормированного базиса из собственных векторов, для линейного оператора с матрицей $A$ найдётся новый ортонормированный базис, в котором его матрица диагональна. Пусть $U$ -- матрица перехода к этому базису. Эта матрица ортогональна.\\
+Тогда в новом базисе матрица линейного оператора будет иметь вид $A' = U^{-1} A U$, а матрица квадратичной формы $B' = U^T B U$, но для ортогональных матриц $U^{-1} = U^T$ $\Rightarrow$ если $A = B$, то $A' = B'$, т.е. матрица квадратичной формы тоже диагональна. Это означает, что в этом базисе квадратичная форма приведена к каноническому виду.\qed
+
+\textbf{20. Что можно сказать про ортогональное дополнение к образу сопряжённого оператора? Ответ обоснуйте. Сформулируйте и докажите теорему Фредгольма.\\}
+\textit{Ортогональное дополнение к образу сопряжённого оператора.} Пусть $\A$ -- линейный оператор $\A : V \rightarrow V$. Тогда $\Ker{\A} = \left( \Im{\A^*} \right)^\perp$\\
+\proof Докажем, что эти множества совпадают.\\
+($\subseteq$) Пусть $x \in \Ker{\A}$. Тогда $Ax = 0$. $\forall y \in V: 0 = y^T \underbrace{A x}_{0} = (A^T y)^T x$.\\
+Рассмотрим ортонормированный базис в $V$. Тогда $(A^T y)^T \cdot \Gamma \cdot x \stackrel{\Gamma = E}{=} (A^T y)^T x = (A^* y, x)$, т.е. $x \perp \Im{\A^*} \Rightarrow \Ker{\A} \subseteq \left( \Im{A^*} \right)^\perp$.\\
+($\supseteq$) Пусть $x \in \left( \Im{A^*} \right)^\perp$. Рассмотрим $(x, A^* y)$:\\
+$\forall y \in V: 0 \stackrel{x \in \left( \Im{A^*} \right)^\perp}{=} (x, A^* y) \stackrel{\text{по опр. сопряж. л.о.}}{=} (Ax, y) = 0$.\\
+Так как мы можем рассмотреть любые векторы, рассмотрим $y = Ax$:\\
+$(Ax, y) = (Ax, Ax) = \left\| Ax \right\|^2 = 0 \Rightarrow Ax = 0 \Rightarrow x \in \Ker{\A} \Rightarrow \left( \Im{A^*} \right)^\perp \subseteq \Ker{\A}$.\\
+Следовательно, $\Ker{\A} = \left( \Im{A^*} \right)^T$ \qed\\\\
+\textit{Теорема Фредгольма.} СЛАУ $Ax = b$ совместна $\Leftrightarrow$ вектор $b$ перпендикулярен всем решениям ОСЛАУ $A^T y = 0$.\\
+\proof $Ax = b$ совместна $\Leftrightarrow$ $b \in \Im{A}$, а по теореме, $V = \Im{A} \oplus \Ker{A^*}$, т.е. $b \in \Im{A} = (\Ker{A^*})^\perp$. \qed
+
+\color{gray}
+\rule{\linewidth}{0.3mm}
+
+\begin{center}
+\textit{Доказательства 4 модуля, не использованные на коллоквиуме}
+\end{center}
+
+\textbf{21. Выпишите и докажите формулу для преобразования координат ковектора при переходе к другому базису.\\}
+
+\end{document}
